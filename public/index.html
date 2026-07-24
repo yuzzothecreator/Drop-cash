@@ -1,0 +1,3228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="PesaFlow — Tanzania Mobile Money Payment Gateway. Send payments and payouts via M-Pesa, Airtel Money, HaloPesa & YAS." />
+<title>PesaFlow — Mobile Money Gateway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   PesaFlow — Design System
+   ═══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Core palette */
+  --bg: #fafaf9;
+  --bg-sidebar: #111111;
+  --bg-sidebar-hover: #1c1c1c;
+  --bg-sidebar-active: #252525;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f4f4f2;
+
+  /* Borders */
+  --border: #e5e5e3;
+  --border-light: #eeeeec;
+  --border-focus: #111111;
+
+  /* Text */
+  --text: #111111;
+  --text-secondary: #6b6b68;
+  --text-tertiary: #9c9c98;
+  --text-inverse: #fafaf9;
+  --text-sidebar: #a0a0a0;
+  --text-sidebar-active: #ffffff;
+
+  /* Status */
+  --green: #22c55e;
+  --green-bg: #dcfce7;
+  --green-text: #15803d;
+  --amber: #f59e0b;
+  --amber-bg: #fef3c7;
+  --amber-text: #92400e;
+  --red: #ef4444;
+  --red-bg: #fee2e2;
+  --red-text: #991b1b;
+  --blue: #3b82f6;
+  --blue-bg: #dbeafe;
+  --blue-text: #1e40af;
+
+  /* Providers */
+  --mpesa: #00A651;
+  --airtel: #E4002B;
+  --halo: #F7941D;
+  --yas: #0072BB;
+
+  /* Spacing / Radius */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+  --radius-full: 9999px;
+
+  /* Sidebar */
+  --sidebar-w: 260px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* ─── Icons ──────────────────────────────────────────────────────────────── */
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-brand {
+  padding: 24px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-sidebar-active);
+  letter-spacing: -0.02em;
+}
+.brand-text span {
+  font-size: 11px;
+  color: var(--text-sidebar);
+  font-weight: 400;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-sidebar);
+  padding: 16px 12px 8px;
+  opacity: 0.5;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-sidebar);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: var(--bg-sidebar-hover);
+  color: var(--text-sidebar-active);
+}
+
+.nav-item.active {
+  background: var(--bg-sidebar-active);
+  color: var(--text-sidebar-active);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--green);
+  border-radius: 0 2px 2px 0;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.nav-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--green);
+}
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-sidebar);
+}
+
+.status-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.status-pulse.connected {
+  background: var(--green);
+}
+
+.status-pulse.connected::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--green);
+  opacity: 0.3;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.3; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.status-pulse.error {
+  background: var(--red);
+}
+
+/* ─── Mobile toggle ──────────────────────────────────────────────────────── */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--bg-sidebar);
+  z-index: 101;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.menu-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--bg-sidebar-hover);
+  color: var(--text-sidebar-active);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════════════════════ */
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+}
+
+.page-header {
+  padding: 28px 36px 20px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.page-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.page-content {
+  padding: 28px 36px;
+  max-width: 1200px;
+}
+
+/* ─── View management ────────────────────────────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; animation: fadeUp 0.3s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.card-action {
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-weight: 500;
+}
+.card-action:hover { color: var(--text); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DASHBOARD VIEW
+   ═══════════════════════════════════════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.stat-card:hover {
+  border-color: var(--border-focus);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ─── Quick Actions ──────────────────────────────────────────────────────── */
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quick-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-align: left;
+}
+
+.quick-btn:hover {
+  border-color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.quick-btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quick-btn-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.quick-btn-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+/* ─── Recent Transactions ────────────────────────────────────────────────── */
+.tx-list { display: flex; flex-direction: column; }
+
+.tx-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.1s;
+}
+.tx-row:last-child { border-bottom: none; }
+
+.tx-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.tx-details { flex: 1; min-width: 0; }
+
+.tx-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+}
+
+.tx-right { text-align: right; flex-shrink: 0; }
+
+.tx-amount {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.tx-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  margin-top: 3px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status-success { background: var(--green-bg); color: var(--green-text); }
+.status-processing { background: var(--amber-bg); color: var(--amber-text); }
+.status-failed { background: var(--red-bg); color: var(--red-text); }
+
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.empty-state-icon {
+  margin-bottom: 8px;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STEPPER — Wizard Flow
+   ═══════════════════════════════════════════════════════════════════════════ */
+.stepper-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.stepper-step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  position: relative;
+  cursor: default;
+}
+
+.stepper-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background: var(--border);
+}
+
+.step-status-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.step-status-label.complete { color: var(--green-text); }
+.step-status-label.current { color: var(--text); }
+.step-status-label.upcoming { color: var(--text-tertiary); }
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.step-number.complete {
+  background: var(--text);
+  color: white;
+}
+
+.step-number.current {
+  background: var(--text);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.1);
+}
+
+.step-number.upcoming {
+  background: var(--surface-sunken);
+  color: var(--text-tertiary);
+}
+
+.step-info { min-width: 0; }
+
+.step-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stepper-step.upcoming .step-title {
+  color: var(--text-tertiary);
+}
+
+.step-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stepper-step.upcoming .step-desc {
+  color: var(--text-tertiary);
+}
+
+/* ─── Step Content Area ──────────────────────────────────────────────────── */
+.wizard-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+
+.wizard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wizard-sidebar-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.wizard-sidebar-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.wizard-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.wizard-nav-item.completed {
+  color: var(--text);
+}
+
+.wizard-nav-item.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.wizard-nav-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.wizard-nav-check.done {
+  background: var(--text);
+  color: white;
+}
+
+.wizard-nav-check.current {
+  background: var(--text);
+  color: white;
+  font-weight: 700;
+}
+
+.wizard-nav-check.pending {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-tertiary);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.wizard-main {
+  min-width: 0;
+}
+
+/* ─── Step content cards ─────────────────────────────────────────────────── */
+.step-content { display: none; }
+.step-content.active { display: block; animation: fadeUp 0.25s ease; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FORMS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.form-group { margin-bottom: 16px; }
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.06);
+}
+
+.form-input::placeholder { color: var(--text-tertiary); }
+.form-input.error { border-color: var(--red); }
+
+.phone-input-row {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.phone-input-row.error { border-color: var(--red); }
+
+.phone-input-row:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.06);
+}
+
+.phone-prefix {
+  padding: 11px 14px;
+  background: var(--surface-sunken);
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phone-input-row .form-input {
+  border: none;
+  border-radius: 0;
+  flex: 1;
+}
+.phone-input-row .form-input:focus { box-shadow: none; }
+
+.amount-wrap {
+  position: relative;
+}
+.amount-prefix {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.amount-wrap .form-input { padding-left: 52px; }
+
+/* Quick amount buttons */
+.quick-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.quick-amt {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.quick-amt:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+/* ─── Provider Grid ──────────────────────────────────────────────────────── */
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.provider-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--surface);
+}
+
+.provider-card:hover {
+  border-color: var(--text-secondary);
+  transform: translateY(-1px);
+}
+
+.provider-card.selected {
+  border-color: var(--text);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.06);
+}
+
+.provider-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
+}
+
+.provider-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.provider-prefix {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 3px;
+}
+
+/* ─── Fee Summary ────────────────────────────────────────────────────────── */
+.fee-summary {
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.fee-label { color: var(--text-secondary); }
+.fee-value { font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+.fee-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0 8px;
+}
+
+.fee-total .fee-label { font-weight: 600; color: var(--text); }
+.fee-total .fee-value { font-weight: 700; font-size: 15px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: white;
+}
+.btn-primary:hover {
+  background: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+  border-color: var(--text);
+  background: var(--surface-sunken);
+}
+
+.btn-full { width: 100%; }
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* ─── Step navigation ────────────────────────────────────────────────────── */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.step-nav-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.step-nav-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.step-nav-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  padding: 8px 0;
+  transition: color 0.15s;
+}
+
+.step-nav-btn:hover { color: var(--text); }
+.step-nav-btn.next { align-items: flex-end; }
+.step-nav-btn.prev { align-items: flex-start; }
+
+/* ─── Progress bar ───────────────────────────────────────────────────────── */
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-sunken);
+  border-radius: 3px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ACTIVITY LOG
+   ═══════════════════════════════════════════════════════════════════════════ */
+.log-container {
+  background: #0d0d0d;
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  line-height: 2;
+}
+
+.log-line {
+  display: flex;
+  gap: 12px;
+  animation: logSlide 0.2s ease;
+}
+
+@keyframes logSlide {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.log-time { color: #555; flex-shrink: 0; }
+.log-info { color: #c9d1d9; }
+.log-success { color: #3fb950; }
+.log-error { color: #f85149; }
+.log-warn { color: #d29922; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRANSACTIONS VIEW
+   ═══════════════════════════════════════════════════════════════════════════ */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 320px;
+}
+
+.filter-chip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  border-color: var(--text);
+  color: var(--text);
+  background: var(--surface-sunken);
+}
+
+/* ─── Transaction table ──────────────────────────────────────────────────── */
+.tx-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tx-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tx-table td {
+  padding: 14px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.tx-table tr:hover td {
+  background: var(--surface-sunken);
+}
+
+.tx-table .ref-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tx-table .amount-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+.tx-table .provider-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.provider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SETTINGS VIEW
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.setting-row:last-child { border-bottom: none; }
+
+.setting-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.setting-value {
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.api-endpoint-list { list-style: none; }
+
+.api-endpoint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.api-endpoint:last-child { border-bottom: none; }
+
+.api-method {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.02em;
+  min-width: 48px;
+  text-align: center;
+}
+
+.method-get { background: var(--blue-bg); color: var(--blue-text); }
+.method-post { background: var(--green-bg); color: var(--green-text); }
+
+.api-path {
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.api-desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+/* ─── Code block ─────────────────────────────────────────────────────────── */
+.code-block {
+  background: #0d0d0d;
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #c9d1d9;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ─── Tag chips ──────────────────────────────────────────────────────────── */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+
+.tag .tag-remove {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+.tag .tag-remove:hover { color: var(--red); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BULK PAYOUT VIEW
+   ═══════════════════════════════════════════════════════════════════════════ */
+.bulk-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.bulk-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+}
+
+.bulk-table td {
+  padding: 6px 12px;
+}
+
+.bulk-table .form-input {
+  padding: 8px 12px;
+}
+
+.bulk-remove-btn {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+}
+.bulk-remove-btn:hover { color: var(--red); }
+
+.bulk-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  margin-top: 16px;
+}
+
+.bulk-stat {
+  text-align: center;
+}
+.bulk-stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.bulk-stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-header {
+    display: flex;
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+  }
+
+  .main {
+    margin-left: 0;
+    padding-top: 56px;
+  }
+
+  .page-content {
+    padding: 20px 16px;
+  }
+
+  .page-header {
+    padding: 20px 16px 16px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wizard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wizard-sidebar {
+    display: none;
+  }
+
+  .stepper-bar {
+    overflow-x: auto;
+  }
+
+  .stepper-step {
+    min-width: 140px;
+  }
+
+  .provider-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stepper-bar {
+    display: none;
+  }
+}
+
+/* ─── Loading spinner ────────────────────────────────────────────────────── */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Tooltip ────────────────────────────────────────────────────────────── */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: var(--text);
+  color: white;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ─── Confirmation dialog ────────────────────────────────────────────────── */
+.confirm-box {
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.confirm-label { color: var(--text-secondary); }
+.confirm-value { font-weight: 600; text-align: right; }
+
+/* ─── Payment status animation ───────────────────────────────────────────── */
+.status-animation {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.status-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+}
+
+.status-circle.waiting {
+  background: var(--amber-bg);
+  color: var(--amber-text);
+  animation: pulse 1.5s ease infinite;
+}
+
+.status-circle.success {
+  background: var(--green-bg);
+  color: var(--green-text);
+  animation: successPop 0.4s ease;
+}
+
+.status-circle.failed {
+  background: var(--red-bg);
+  color: var(--red-text);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes successPop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.status-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.status-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.toggle-group {
+  display: flex;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+.toggle-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toggle-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Mobile Header ═══ -->
+<div class="mobile-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
+    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <div class="brand-icon">PF</div>
+  <span style="color:white;font-weight:600;font-size:14px;">PesaFlow</span>
+</div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ═══ Sidebar ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">PF</div>
+    <div class="brand-text">
+      <h1>PesaFlow</h1>
+      <span>Mobile Money Gateway</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Menu</div>
+    <button class="nav-item active" onclick="switchView('dashboard')" data-view="dashboard">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span> Dashboard
+    </button>
+    <button class="nav-item" onclick="switchView('payment')" data-view="payment">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span> Send Payment
+    </button>
+    <button class="nav-item" onclick="switchView('payout')" data-view="payout">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span> Send Payout
+    </button>
+    <button class="nav-item" onclick="switchView('bulk-payout')" data-view="bulk-payout">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Bulk Payout
+    </button>
+    <button class="nav-item" onclick="switchView('transactions')" data-view="transactions">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span> Transactions
+      <span class="nav-badge" id="tx-count">0</span>
+    </button>
+
+    <div class="nav-label">System</div>
+    <button class="nav-item" onclick="switchView('log')" data-view="log">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg></span> Activity Log
+    </button>
+    <button class="nav-item" onclick="switchView('settings')" data-view="settings">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span> Settings & API
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="connection-status">
+      <div class="status-pulse" id="conn-pulse"></div>
+      <span id="conn-text">Connecting…</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══ Main Content ═══ -->
+<main class="main">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       DASHBOARD VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view active" id="view-dashboard">
+    <div class="page-header">
+      <h2>Dashboard</h2>
+      <p>Overview of your PesaFlow payment gateway</p>
+    </div>
+    <div class="page-content">
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span> Account Balance</div>
+          <div class="stat-value" id="dash-balance">—</div>
+          <div class="stat-sub">TZS · ClickPesa Account</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span> Payments</div>
+          <div class="stat-value" id="dash-payments">0</div>
+          <div class="stat-sub">Total collections this session</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span> Payouts</div>
+          <div class="stat-value" id="dash-payouts">0</div>
+          <div class="stat-sub">Total disbursements this session</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Success Rate</div>
+          <div class="stat-value" id="dash-rate">—</div>
+          <div class="stat-sub">Based on session data</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Quick Actions -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Quick Actions</span>
+          </div>
+          <div class="quick-actions">
+            <button class="quick-btn" onclick="switchView('payment')">
+              <div class="quick-btn-icon" style="background:var(--green-bg);color:var(--green-text)"><svg class="icon-svg" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div>
+              <div>
+                <div class="quick-btn-text">Collect Payment</div>
+                <div class="quick-btn-sub">USSD Push request</div>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchView('payout')">
+              <div class="quick-btn-icon" style="background:var(--blue-bg);color:var(--blue-text)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></div>
+              <div>
+                <div class="quick-btn-text">Send Payout</div>
+                <div class="quick-btn-sub">Mobile money disbursement</div>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchView('transactions')">
+              <div class="quick-btn-icon" style="background:var(--amber-bg);color:var(--amber-text)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></div>
+              <div>
+                <div class="quick-btn-text">View Transactions</div>
+                <div class="quick-btn-sub">Full history &amp; search</div>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchView('bulk-payout')">
+              <div class="quick-btn-icon" style="background:var(--surface-sunken);color:var(--text)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div>
+                <div class="quick-btn-text">Bulk Payouts</div>
+                <div class="quick-btn-sub">Disburse to multiple people</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Transactions</span>
+            <button class="card-action" onclick="switchView('transactions')">View All →</button>
+          </div>
+          <div id="dash-recent-tx">
+            <div class="empty-state">
+              <div class="empty-state-icon"><svg class="icon-svg" style="width:32px;height:32px;" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
+              No transactions yet. Send your first payment!
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PAYMENT VIEW — Multi-Step Wizard
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-payment">
+    <div class="page-header">
+      <h2>Send Payment</h2>
+      <p>Collect mobile money via USSD push request</p>
+    </div>
+    <div class="page-content">
+
+      <!-- Stepper Bar -->
+      <div class="stepper-bar" id="pay-stepper">
+        <div class="stepper-step" data-step="1">
+          <div class="step-number current" id="pay-sn-1">1</div>
+          <div class="step-info">
+            <div class="step-status-label current" id="pay-sl-1">Current</div>
+            <div class="step-title">Select Provider</div>
+            <div class="step-desc" id="pay-sd-1">Choose mobile network</div>
+          </div>
+        </div>
+        <div class="stepper-step upcoming" data-step="2">
+          <div class="step-number upcoming" id="pay-sn-2">2</div>
+          <div class="step-info">
+            <div class="step-status-label upcoming" id="pay-sl-2">Upcoming</div>
+            <div class="step-title">Payment Details</div>
+            <div class="step-desc" id="pay-sd-2">Name, Phone &amp; Amount</div>
+          </div>
+        </div>
+        <div class="stepper-step upcoming" data-step="3">
+          <div class="step-number upcoming" id="pay-sn-3">3</div>
+          <div class="step-info">
+            <div class="step-status-label upcoming" id="pay-sl-3">Upcoming</div>
+            <div class="step-title">Review &amp; Confirm</div>
+            <div class="step-desc" id="pay-sd-3">Verify details</div>
+          </div>
+        </div>
+        <div class="stepper-step upcoming" data-step="4">
+          <div class="step-number upcoming" id="pay-sn-4">4</div>
+          <div class="step-info">
+            <div class="step-status-label upcoming" id="pay-sl-4">Upcoming</div>
+            <div class="step-title">Payment Status</div>
+            <div class="step-desc" id="pay-sd-4">Waiting for PIN</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wizard Layout -->
+      <div class="wizard-layout">
+        <!-- Left sidebar steps -->
+        <div class="wizard-sidebar">
+          <div class="wizard-sidebar-title" id="pay-wizard-title">Select Provider</div>
+          <div class="wizard-sidebar-desc" id="pay-wizard-desc">Choose the mobile money network to collect payment from.</div>
+
+          <div class="wizard-nav-item completed" id="pay-wnav-1">
+            <div class="wizard-nav-check current" id="pay-wcheck-1">1</div>
+            Select Provider
+          </div>
+          <div class="wizard-nav-item" id="pay-wnav-2">
+            <div class="wizard-nav-check pending" id="pay-wcheck-2">2</div>
+            Payment Details
+          </div>
+          <div class="wizard-nav-item" id="pay-wnav-3">
+            <div class="wizard-nav-check pending" id="pay-wcheck-3">3</div>
+            Review & Confirm
+          </div>
+          <div class="wizard-nav-item" id="pay-wnav-4">
+            <div class="wizard-nav-check pending" id="pay-wcheck-4">4</div>
+            Payment Status
+          </div>
+
+          <div style="margin-top:auto;padding-top:24px;">
+            <div class="progress-label" id="pay-progress-label">25% Completed</div>
+            <div class="progress-track">
+              <div class="progress-fill" id="pay-progress-fill" style="width:25%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wizard main content -->
+        <div class="wizard-main">
+          <!-- Step 1: Provider -->
+          <div class="step-content active" id="pay-step-1">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Mobile Money Provider</span>
+              </div>
+              <div class="provider-grid">
+                <div class="provider-card selected" id="prov-MPESA" onclick="selectProvider('MPESA')">
+                  <div class="provider-icon" style="background:var(--mpesa)">MP</div>
+                  <div class="provider-name">M-Pesa</div>
+                  <div class="provider-prefix">074 / 075</div>
+                </div>
+                <div class="provider-card" id="prov-AIRTEL" onclick="selectProvider('AIRTEL')">
+                  <div class="provider-icon" style="background:var(--airtel)">AM</div>
+                  <div class="provider-name">Airtel Money</div>
+                  <div class="provider-prefix">068 / 078</div>
+                </div>
+                <div class="provider-card" id="prov-HALO" onclick="selectProvider('HALO')">
+                  <div class="provider-icon" style="background:var(--halo)">HP</div>
+                  <div class="provider-name">HaloPesa</div>
+                  <div class="provider-prefix">061 / 062</div>
+                </div>
+                <div class="provider-card" id="prov-YAS" onclick="selectProvider('YAS')">
+                  <div class="provider-icon" style="background:var(--yas)">YS</div>
+                  <div class="provider-name">YAS</div>
+                  <div class="provider-prefix">071 / 073</div>
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <div class="tag-list">
+                  <div class="tag">🇹🇿 Tanzania</div>
+                  <div class="tag">TZS Currency</div>
+                  <div class="tag">USSD Push</div>
+                </div>
+              </div>
+              <div class="btn-group" style="justify-content:flex-end;">
+                <button class="btn btn-primary" onclick="payStep(2)">Continue →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Details -->
+          <div class="step-content" id="pay-step-2">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Payment Information</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Customer Name</label>
+                <input type="text" class="form-input" id="pay-name" placeholder="John Doe" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <div class="phone-input-row" id="pay-phone-wrap">
+                  <span class="phone-prefix">🇹🇿 +255</span>
+                  <input type="tel" class="form-input" id="pay-phone" placeholder="7XX XXX XXX" maxlength="9" oninput="updatePaySummary()" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Amount (TZS)</label>
+                <div class="amount-wrap">
+                  <span class="amount-prefix">TZS</span>
+                  <input type="number" class="form-input" id="pay-amount" placeholder="0" min="100" oninput="updatePaySummary()" />
+                </div>
+                <div class="quick-amounts">
+                  <button class="quick-amt" onclick="setPayAmount(1000)">1,000</button>
+                  <button class="quick-amt" onclick="setPayAmount(5000)">5,000</button>
+                  <button class="quick-amt" onclick="setPayAmount(10000)">10,000</button>
+                  <button class="quick-amt" onclick="setPayAmount(50000)">50,000</button>
+                  <button class="quick-amt" onclick="setPayAmount(100000)">100,000</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Order Reference (optional)</label>
+                <input type="text" class="form-input" id="pay-ref" placeholder="Alphanumeric only (e.g. INV123)" />
+              </div>
+
+              <div class="fee-summary">
+                <div class="fee-row"><span class="fee-label">Amount</span><span class="fee-value" id="pay-s-amt">TZS 0</span></div>
+                <div class="fee-row"><span class="fee-label">Est. fee (~1.5%)</span><span class="fee-value" id="pay-s-fee">TZS 0</span></div>
+                <hr class="fee-divider">
+                <div class="fee-row fee-total"><span class="fee-label">Total charged</span><span class="fee-value" id="pay-s-total">TZS 0</span></div>
+              </div>
+
+              <div class="btn-group" style="justify-content:space-between;">
+                <button class="btn btn-secondary" onclick="payStep(1)">← Back</button>
+                <button class="btn btn-primary" onclick="payStep(3)">Review Payment →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Confirm -->
+          <div class="step-content" id="pay-step-3">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Confirm Payment Details</span>
+              </div>
+              <div class="confirm-box">
+                <div class="confirm-row"><span class="confirm-label">Customer Name</span><span class="confirm-value" id="pay-c-name">—</span></div>
+                <div class="confirm-row"><span class="confirm-label">Provider</span><span class="confirm-value" id="pay-c-provider">M-Pesa</span></div>
+                <div class="confirm-row"><span class="confirm-label">Phone Number</span><span class="confirm-value" id="pay-c-phone">—</span></div>
+                <div class="confirm-row"><span class="confirm-label">Amount</span><span class="confirm-value" id="pay-c-amount">—</span></div>
+                <div class="confirm-row"><span class="confirm-label">Est. Fee</span><span class="confirm-value" id="pay-c-fee">—</span></div>
+                <div class="confirm-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px;"><span class="confirm-label" style="font-weight:600;">Total</span><span class="confirm-value" id="pay-c-total" style="font-size:16px;">—</span></div>
+                <div class="confirm-row"><span class="confirm-label">Reference</span><span class="confirm-value" id="pay-c-ref" style="font-family:'JetBrains Mono',monospace;font-size:12px;">—</span></div>
+              </div>
+              <div class="btn-group" style="justify-content:space-between;">
+                <button class="btn btn-secondary" onclick="payStep(2)">← Edit Details</button>
+                <button class="btn btn-primary" id="pay-confirm-btn" onclick="executePayment()">
+                  Confirm & Send USSD Push
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Status -->
+          <div class="step-content" id="pay-step-4">
+            <div class="card">
+              <div id="pay-status-area">
+                <div class="status-animation">
+                  <div class="status-circle waiting" id="pay-status-circle">
+                    <svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                  </div>
+                  <div class="status-title" id="pay-status-title">Waiting for PIN…</div>
+                  <div class="status-desc" id="pay-status-desc">A USSD prompt has been sent to the customer's phone. Waiting for them to enter their PIN.</div>
+                </div>
+                <div class="progress-track" style="margin:0 20px;">
+                  <div class="progress-fill" id="pay-poll-progress" style="width:0%;background:var(--amber)"></div>
+                </div>
+                <p style="text-align:center;font-size:11px;color:var(--text-tertiary);margin-top:8px;" id="pay-poll-label">Polling for status…</p>
+              </div>
+              <div class="btn-group" style="justify-content:center;margin-top:24px;">
+                <button class="btn btn-secondary" id="pay-new-btn" onclick="resetPayment()" style="display:none;">← New Payment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PAYOUT VIEW — Single
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-payout">
+    <div class="page-header">
+      <h2>Send Payout</h2>
+      <p>Disburse funds to mobile money wallets</p>
+    </div>
+    <div class="page-content">
+
+      <div class="stepper-bar" id="payout-stepper">
+        <div class="stepper-step" data-step="1">
+          <div class="step-number current" id="po-sn-1">1</div>
+          <div class="step-info">
+            <div class="step-status-label current" id="po-sl-1">Current</div>
+            <div class="step-title">Payout Details</div>
+            <div class="step-desc">Recipient & amount</div>
+          </div>
+        </div>
+        <div class="stepper-step upcoming" data-step="2">
+          <div class="step-number upcoming" id="po-sn-2">2</div>
+          <div class="step-info">
+            <div class="step-status-label upcoming" id="po-sl-2">Upcoming</div>
+            <div class="step-title">Review & Send</div>
+            <div class="step-desc">Confirm payout</div>
+          </div>
+        </div>
+        <div class="stepper-step upcoming" data-step="3">
+          <div class="step-number upcoming" id="po-sn-3">3</div>
+          <div class="step-info">
+            <div class="step-status-label upcoming" id="po-sl-3">Upcoming</div>
+            <div class="step-title">Payout Status</div>
+            <div class="step-desc">Processing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payout Step 1: Details -->
+      <div class="step-content active" id="po-step-1">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Recipient & Amount</span></div>
+
+          <div class="form-group">
+            <label class="form-label">Recipient Name</label>
+            <input type="text" class="form-input" id="po-name" placeholder="Jane Doe" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Recipient Phone</label>
+            <div class="phone-input-row" id="po-phone-wrap">
+              <span class="phone-prefix">🇹🇿 +255</span>
+              <input type="tel" class="form-input" id="po-phone" placeholder="7XX XXX XXX" maxlength="9" oninput="updatePoSummary()" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Payout Amount (TZS)</label>
+            <div class="amount-wrap">
+              <span class="amount-prefix">TZS</span>
+              <input type="number" class="form-input" id="po-amount" placeholder="0" min="100" oninput="updatePoSummary()" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Order Reference (optional)</label>
+            <input type="text" class="form-input" id="po-ref" placeholder="Alphanumeric only (e.g. PO123)" />
+          </div>
+
+          <div class="fee-summary">
+            <div class="fee-row"><span class="fee-label">Payout Amount</span><span class="fee-value" id="po-s-amt">TZS 0</span></div>
+            <div class="fee-row"><span class="fee-label">Est. fee</span><span class="fee-value" id="po-s-fee">TZS 0</span></div>
+            <hr class="fee-divider">
+            <div class="fee-row fee-total"><span class="fee-label">Total deducted</span><span class="fee-value" id="po-s-total">TZS 0</span></div>
+          </div>
+
+          <div class="btn-group" style="justify-content:flex-end;">
+            <button class="btn btn-primary" onclick="poStep(2)">Review Payout →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payout Step 2: Confirm -->
+      <div class="step-content" id="po-step-2">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Confirm Payout</span></div>
+          <div class="confirm-box">
+            <div class="confirm-row"><span class="confirm-label">Recipient Name</span><span class="confirm-value" id="po-c-name">—</span></div>
+            <div class="confirm-row"><span class="confirm-label">Recipient Phone</span><span class="confirm-value" id="po-c-phone">—</span></div>
+            <div class="confirm-row"><span class="confirm-label">Amount</span><span class="confirm-value" id="po-c-amount">—</span></div>
+            <div class="confirm-row"><span class="confirm-label">Est. Fee</span><span class="confirm-value" id="po-c-fee">—</span></div>
+            <div class="confirm-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px;">
+              <span class="confirm-label" style="font-weight:600;">Total Deducted</span>
+              <span class="confirm-value" id="po-c-total" style="font-size:16px;">—</span>
+            </div>
+            <div class="confirm-row"><span class="confirm-label">Reference</span><span class="confirm-value" id="po-c-ref" style="font-family:'JetBrains Mono',monospace;font-size:12px;">—</span></div>
+          </div>
+          <div class="btn-group" style="justify-content:space-between;">
+            <button class="btn btn-secondary" onclick="poStep(1)">← Edit</button>
+            <button class="btn btn-primary" id="po-confirm-btn" onclick="executePayout()">Confirm & Send Payout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payout Step 3: Status -->
+      <div class="step-content" id="po-step-3">
+        <div class="card">
+          <div id="po-status-area">
+            <div class="status-animation">
+              <div class="status-circle waiting" id="po-status-circle">
+                <svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+              </div>
+              <div class="status-title" id="po-status-title">Processing Payout…</div>
+              <div class="status-desc" id="po-status-desc">Sending funds to the recipient's mobile wallet.</div>
+            </div>
+          </div>
+          <div class="btn-group" style="justify-content:center;margin-top:16px;">
+            <button class="btn btn-secondary" id="po-new-btn" onclick="resetPayout()" style="display:none;">← New Payout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       BULK PAYOUT VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-bulk-payout">
+    <div class="page-header">
+      <h2>Bulk Payouts</h2>
+      <p>Send mobile money to multiple recipients at once</p>
+    </div>
+    <div class="page-content">
+      
+      <div class="card" id="bulk-setup-card">
+        <div class="card-header"><span class="card-title">Setup Bulk Payout</span></div>
+        
+        <div class="toggle-group">
+          <button class="toggle-btn active" id="bulk-toggle-diff" onclick="setBulkMode('diff')">Different Amounts</button>
+          <button class="toggle-btn" id="bulk-toggle-same" onclick="setBulkMode('same')">Same Amount</button>
+        </div>
+
+        <div class="form-group" id="bulk-fixed-amount-group" style="display:none; max-width: 300px; margin-bottom: 24px;">
+          <label class="form-label">Amount per Recipient (TZS)</label>
+          <div class="amount-wrap">
+            <span class="amount-prefix">TZS</span>
+            <input type="number" class="form-input" id="bulk-fixed-amount" placeholder="0" min="100" oninput="updateBulkSummary()" />
+          </div>
+        </div>
+
+        <table class="bulk-table" id="bulk-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone Number (+255)</th>
+              <th id="bulk-th-amount">Amount (TZS)</th>
+              <th style="width: 40px;"></th>
+            </tr>
+          </thead>
+          <tbody id="bulk-tbody">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+
+        <button class="btn btn-secondary" style="margin-top:12px;" onclick="addBulkRow()">
+          <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Recipient
+        </button>
+
+        <div class="bulk-summary">
+          <div class="bulk-stat">
+            <div class="bulk-stat-label">Recipients</div>
+            <div class="bulk-stat-value" id="bulk-sum-count">0</div>
+          </div>
+          <div class="bulk-stat">
+            <div class="bulk-stat-label">Total Amount</div>
+            <div class="bulk-stat-value" id="bulk-sum-amt">TZS 0</div>
+          </div>
+          <div class="bulk-stat">
+            <div class="bulk-stat-label">Total Est. Fee</div>
+            <div class="bulk-stat-value" id="bulk-sum-fee">TZS 0</div>
+          </div>
+        </div>
+
+        <div class="btn-group" style="justify-content:flex-end;">
+          <button class="btn btn-primary" id="bulk-execute-btn" onclick="executeBulkPayout()">Review & Start Bulk Payout →</button>
+        </div>
+      </div>
+
+      <div class="card" id="bulk-progress-card" style="display:none;">
+        <div class="card-header"><span class="card-title">Bulk Payout Progress</span></div>
+        
+        <div style="text-align:center; padding: 20px 0;">
+          <h3 style="font-size:18px; font-weight:700; margin-bottom: 8px;" id="bulk-progress-title">Processing...</h3>
+          <p style="font-size:13px; color:var(--text-secondary);" id="bulk-progress-desc">Please wait while we process the payouts.</p>
+          
+          <div class="progress-track" style="margin: 24px 0;">
+            <div class="progress-fill" id="bulk-progress-fill" style="width:0%;background:var(--amber)"></div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;" id="bulk-progress-count">0 / 0</div>
+        </div>
+
+        <div class="log-container" id="bulk-log" style="max-height:180px;"></div>
+
+        <div class="btn-group" style="justify-content:center;margin-top:20px;">
+          <button class="btn btn-secondary" id="bulk-reset-btn" style="display:none;" onclick="resetBulkPayout()">← New Bulk Payout</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       TRANSACTIONS VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-transactions">
+    <div class="page-header">
+      <h2>Transactions</h2>
+      <p>Full payment and payout history</p>
+    </div>
+    <div class="page-content">
+
+      <div class="filter-bar">
+        <input type="text" class="form-input search-input" id="tx-search" placeholder="Search by name, ref, or phone…" oninput="filterTransactions()" />
+        <button class="filter-chip active" onclick="filterType('all',this)">All</button>
+        <button class="filter-chip" onclick="filterType('payment',this)">Payments</button>
+        <button class="filter-chip" onclick="filterType('payout',this)">Payouts</button>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="tx-table" id="tx-table">
+            <thead>
+              <tr>
+                <th>Reference</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Provider</th>
+                <th>Phone</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="tx-tbody">
+            </tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="tx-empty">
+          <div class="empty-state-icon"><svg class="icon-svg" style="width:32px;height:32px;" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
+          No transactions yet.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ACTIVITY LOG VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-log">
+    <div class="page-header">
+      <h2>Activity Log</h2>
+      <p>Real-time system events and API calls</p>
+    </div>
+    <div class="page-content">
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="log-container" id="log-box" style="max-height:500px;border-radius:var(--radius);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SETTINGS VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-settings">
+    <div class="page-header">
+      <h2>Settings & API Reference</h2>
+      <p>Connection details, endpoints, and developer guide</p>
+    </div>
+    <div class="page-content">
+
+      <div class="settings-grid">
+        <!-- Connection -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Connection Status</span></div>
+          <div class="setting-row">
+            <span class="setting-label">API Endpoint</span>
+            <span class="setting-value" style="font-size:11px;">api.clickpesa.com</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Auth Status</span>
+            <span class="setting-value" id="set-auth-status">Checking…</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Environment</span>
+            <span class="setting-value" id="set-env">—</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Server Port</span>
+            <span class="setting-value" id="set-port">—</span>
+          </div>
+          <button class="btn btn-secondary btn-full" style="margin-top:12px;" onclick="checkHealth()">Test Connection</button>
+        </div>
+
+        <!-- Webhook -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Webhook Configuration</span></div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+            Set the callback URL in your ClickPesa dashboard:
+          </p>
+          <div class="code-block">https://yourdomain.com/api/webhook</div>
+          <p style="font-size:12px;color:var(--text-tertiary);margin-top:12px;">
+            For local development, use ngrok:
+          </p>
+          <div class="code-block" style="margin-top:8px;">npx ngrok http 3000</div>
+        </div>
+      </div>
+
+      <!-- API Endpoints -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-header"><span class="card-title">API Endpoints</span></div>
+        <ul class="api-endpoint-list">
+          <li class="api-endpoint">
+            <span class="api-method method-get">GET</span>
+            <span class="api-path">/api/health</span>
+            <span class="api-desc">Test connection & token</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-post">POST</span>
+            <span class="api-path">/api/preview</span>
+            <span class="api-desc">Validate USSD push request</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-post">POST</span>
+            <span class="api-path">/api/initiate</span>
+            <span class="api-desc">Send USSD push to customer</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-get">GET</span>
+            <span class="api-path">/api/status</span>
+            <span class="api-desc">Query payment status</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-get">GET</span>
+            <span class="api-path">/api/balance</span>
+            <span class="api-desc">Get account balance</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-post">POST</span>
+            <span class="api-path">/api/payout/preview</span>
+            <span class="api-desc">Preview payout & fee</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-post">POST</span>
+            <span class="api-path">/api/payout/create</span>
+            <span class="api-desc">Execute mobile money payout</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-get">GET</span>
+            <span class="api-path">/api/payout/status</span>
+            <span class="api-desc">Query payout status</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-get">GET</span>
+            <span class="api-path">/api/payout/all</span>
+            <span class="api-desc">List all payouts</span>
+          </li>
+          <li class="api-endpoint">
+            <span class="api-method method-post">POST</span>
+            <span class="api-path">/api/webhook</span>
+            <span class="api-desc">Receive ClickPesa callbacks</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<script>
+// ═════════════════════════════════════════════════════════════════════════════
+// STATE
+// ═════════════════════════════════════════════════════════════════════════════
+const provColors = { MPESA:'#00A651', AIRTEL:'#E4002B', HALO:'#F7941D', YAS:'#0072BB' };
+const provNames  = { MPESA:'M-Pesa', AIRTEL:'Airtel Money', HALO:'HaloPesa', YAS:'YAS' };
+const provShort  = { MPESA:'MP', AIRTEL:'AM', HALO:'HP', YAS:'YS' };
+
+let currentProvider = 'MPESA';
+let currentPayStep = 1;
+let currentPoStep = 1;
+let txHistory = [];
+let txFilter = 'all';
+let paymentCount = 0;
+let payoutCount = 0;
+let successCount = 0;
+let totalCount = 0;
+let isConnected = false;
+
+// Bulk Payout State
+let bulkMode = 'diff'; // 'diff' or 'same'
+let bulkRows = [];
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════════════════════════════════════════
+window.onload = () => {
+  addLog('PesaFlow initialized. Checking ClickPesa connection…');
+  checkHealth();
+  addBulkRow(); // Initialize bulk table with 1 row
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═════════════════════════════════════════════════════════════════════════════
+function switchView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + viewId).classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navBtn = document.querySelector(`.nav-item[data-view="${viewId}"]`);
+  if (navBtn) navBtn.classList.add('active');
+
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// HEALTH & BALANCE
+// ═════════════════════════════════════════════════════════════════════════════
+async function checkHealth() {
+  try {
+    const r = await fetch('/api/health');
+    const d = await r.json();
+    if (d.ok) {
+      isConnected = true;
+      setConnection('connected', 'Connected to ClickPesa');
+      document.getElementById('set-auth-status').innerHTML = '<svg class="icon-svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Authenticated';
+      document.getElementById('set-auth-status').style.color = 'var(--green-text)';
+      document.getElementById('set-env').textContent = 'Production';
+      document.getElementById('set-port').textContent = location.port || '80';
+      addLog('✓ Connected to ClickPesa API', 's');
+      fetchBalance();
+    } else {
+      setConnection('error', 'Auth failed');
+      addLog('✗ Authentication error: ' + d.error, 'e');
+    }
+  } catch(e) {
+    setConnection('error', 'Cannot reach server');
+    addLog('✗ Cannot reach backend. Is the server running?', 'e');
+    document.getElementById('set-auth-status').innerHTML = '<svg class="icon-svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg> Disconnected';
+    document.getElementById('set-auth-status').style.color = 'var(--red-text)';
+  }
+}
+
+async function fetchBalance() {
+  try {
+    const r = await fetch('/api/balance');
+    const d = await r.json();
+    let balVal;
+    if (d.balances && d.balances.length > 0) {
+      const tzs = d.balances.find(b => b.currency === 'TZS');
+      balVal = tzs ? tzs.balance : d.balances[0].balance;
+    } else if (d.balance !== undefined) {
+      balVal = d.balance;
+    }
+    
+    if (balVal !== undefined) {
+      const balStr = Number(balVal).toLocaleString();
+      document.getElementById('dash-balance').textContent = balStr;
+      addLog('Balance fetched: TZS ' + balStr, 's');
+    }
+  } catch(e) { /* optional */ }
+}
+
+function setConnection(state, msg) {
+  const pulse = document.getElementById('conn-pulse');
+  pulse.className = 'status-pulse' + (state === 'connected' ? ' connected' : state === 'error' ? ' error' : '');
+  document.getElementById('conn-text').textContent = msg;
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// LOG & UTILS
+// ═════════════════════════════════════════════════════════════════════════════
+function ts() {
+  return new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+}
+
+function addLog(msg, type='i') {
+  const box = document.getElementById('log-box');
+  if (!box) return;
+  const classes = { i:'log-info', s:'log-success', e:'log-error', w:'log-warn' };
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.innerHTML = `<span class="log-time">${ts()}</span><span class="${classes[type] || 'log-info'}">${msg}</span>`;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+function fmt(n) { return 'TZS ' + Math.round(n).toLocaleString(); }
+
+// Generate purely alphanumeric reference
+function genRef() { return 'PF' + Date.now().toString(36).toUpperCase(); }
+
+// Validate alphanumeric reference
+function isValidRef(ref) {
+  return /^[A-Za-z0-9]+$/.test(ref);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// PROVIDER SELECT
+// ═════════════════════════════════════════════════════════════════════════════
+function selectProvider(p) {
+  currentProvider = p;
+  document.querySelectorAll('.provider-card').forEach(el => el.classList.remove('selected'));
+  document.getElementById('prov-' + p).classList.add('selected');
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// PAYMENT WIZARD
+// ═════════════════════════════════════════════════════════════════════════════
+function payStep(step) {
+  // Validation before step 3
+  if (step === 3) {
+    const name = document.getElementById('pay-name').value.trim();
+    const phone = document.getElementById('pay-phone').value.trim();
+    const amount = parseFloat(document.getElementById('pay-amount').value);
+    const ref = document.getElementById('pay-ref').value.trim();
+    
+    let hasError = false;
+
+    if (!name) { document.getElementById('pay-name').classList.add('error'); hasError = true; addLog('⚠ Name is required', 'w'); }
+    else { document.getElementById('pay-name').classList.remove('error'); }
+
+    if (!phone || phone.length < 9) { document.getElementById('pay-phone-wrap').classList.add('error'); hasError = true; addLog('⚠ Enter a valid 9-digit phone number', 'w'); }
+    else { document.getElementById('pay-phone-wrap').classList.remove('error'); }
+
+    if (!amount || amount < 100) { document.getElementById('pay-amount').classList.add('error'); hasError = true; addLog('⚠ Minimum amount is TZS 100', 'w'); }
+    else { document.getElementById('pay-amount').classList.remove('error'); }
+
+    if (ref && !isValidRef(ref)) { document.getElementById('pay-ref').classList.add('error'); hasError = true; addLog('⚠ Reference must be alphanumeric only', 'w'); }
+    else { document.getElementById('pay-ref').classList.remove('error'); }
+
+    if (hasError) return;
+
+    populatePayConfirm();
+  }
+
+  currentPayStep = step;
+
+  // Update step content visibility
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('pay-step-' + i);
+    el.classList.toggle('active', i === step);
+  }
+
+  // Update stepper bar
+  const steps = document.querySelectorAll('#pay-stepper .stepper-step');
+  steps.forEach((s, idx) => {
+    const n = idx + 1;
+    const sn = document.getElementById('pay-sn-' + n);
+    const sl = document.getElementById('pay-sl-' + n);
+
+    s.classList.remove('upcoming');
+    sn.className = 'step-number';
+    sl.className = 'step-status-label';
+
+    if (n < step) {
+      sn.classList.add('complete'); sn.innerHTML = '<svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+      sl.classList.add('complete'); sl.textContent = 'Complete';
+    } else if (n === step) {
+      sn.classList.add('current'); sn.textContent = n;
+      sl.classList.add('current'); sl.textContent = 'Current';
+    } else {
+      s.classList.add('upcoming');
+      sn.classList.add('upcoming'); sn.textContent = n;
+      sl.classList.add('upcoming'); sl.textContent = 'Upcoming';
+    }
+  });
+
+  // Update wizard sidebar
+  const titles = ['Select Provider', 'Payment Details', 'Review & Confirm', 'Payment Status'];
+  const descs = [
+    'Choose the mobile money network to collect payment from.',
+    'Enter the customer\'s name, phone number, and payment amount.',
+    'Verify all details before sending the USSD push.',
+    'Tracking the payment status in real-time.'
+  ];
+  document.getElementById('pay-wizard-title').textContent = titles[step - 1];
+  document.getElementById('pay-wizard-desc').textContent = descs[step - 1];
+
+  for (let i = 1; i <= 4; i++) {
+    const wnav = document.getElementById('pay-wnav-' + i);
+    const wcheck = document.getElementById('pay-wcheck-' + i);
+    wnav.className = 'wizard-nav-item';
+    wcheck.className = 'wizard-nav-check';
+
+    if (i < step) {
+      wnav.classList.add('completed'); wcheck.classList.add('done');
+      wcheck.innerHTML = '<svg class="icon-svg" style="width:12px;height:12px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else if (i === step) {
+      wnav.classList.add('active'); wcheck.classList.add('current'); wcheck.textContent = i;
+    } else {
+      wcheck.classList.add('pending'); wcheck.textContent = i;
+    }
+  }
+
+  // Progress
+  const pct = Math.round((step / 4) * 100);
+  document.getElementById('pay-progress-fill').style.width = pct + '%';
+  document.getElementById('pay-progress-label').textContent = pct + '% Completed';
+}
+
+function setPayAmount(v) {
+  document.getElementById('pay-amount').value = v;
+  updatePaySummary();
+}
+
+function updatePaySummary() {
+  const amt = parseFloat(document.getElementById('pay-amount').value) || 0;
+  const fee = Math.round(amt * 0.015);
+  document.getElementById('pay-s-amt').textContent = fmt(amt);
+  document.getElementById('pay-s-fee').textContent = fmt(fee);
+  document.getElementById('pay-s-total').textContent = fmt(amt + fee);
+}
+
+function populatePayConfirm() {
+  const name = document.getElementById('pay-name').value.trim();
+  const phone = document.getElementById('pay-phone').value.trim();
+  const amount = parseFloat(document.getElementById('pay-amount').value);
+  const ref = document.getElementById('pay-ref').value.trim() || genRef();
+  const fee = Math.round(amount * 0.015);
+
+  document.getElementById('pay-ref').value = ref; // Write generated ref back if it was blank
+  document.getElementById('pay-c-name').textContent = name;
+  document.getElementById('pay-c-provider').textContent = provNames[currentProvider];
+  document.getElementById('pay-c-phone').textContent = '+255 ' + phone;
+  document.getElementById('pay-c-amount').textContent = fmt(amount);
+  document.getElementById('pay-c-fee').textContent = fmt(fee);
+  document.getElementById('pay-c-total').textContent = fmt(amount + fee);
+  document.getElementById('pay-c-ref').textContent = ref;
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// EXECUTE PAYMENT
+// ═════════════════════════════════════════════════════════════════════════════
+async function executePayment() {
+  const name = document.getElementById('pay-name').value.trim();
+  const phone  = document.getElementById('pay-phone').value.trim();
+  const amount = parseFloat(document.getElementById('pay-amount').value);
+  const ref    = document.getElementById('pay-ref').value.trim();
+  const fullPhone = '255' + phone;
+
+  const btn = document.getElementById('pay-confirm-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Processing…';
+
+  addLog(`Initiating payment → ${name} (+${fullPhone}) · TZS ${amount.toLocaleString()}`);
+
+  // Step 1: Preview
+  try {
+    addLog('Step 1 → Validating with ClickPesa…');
+    const prev = await fetch('/api/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
+    });
+    const pd = await prev.json();
+    if (!prev.ok) { addLog('✗ Validation failed: ' + JSON.stringify(pd.error), 'e'); resetPayConfirmBtn(); return; }
+    addLog('✓ Validation passed · Channel: ' + (pd.channel || currentProvider), 's');
+  } catch(e) { addLog('✗ Network error: ' + e.message, 'e'); resetPayConfirmBtn(); return; }
+
+  // Step 2: Initiate
+  try {
+    addLog('Step 2 → Sending USSD push…');
+    const init = await fetch('/api/initiate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
+    });
+    const id = await init.json();
+    if (!init.ok) { addLog('✗ Push failed: ' + JSON.stringify(id.error), 'e'); resetPayConfirmBtn(); return; }
+    addLog(`✓ USSD push sent! Ref: ${ref}`, 's');
+
+    // Add to history
+    addTx({ ref, name, phone: fullPhone, amount, provider: currentProvider, status: 'PROCESSING', type: 'payment' });
+    paymentCount++;
+    totalCount++;
+    updateDashboard();
+
+    // Go to step 4
+    payStep(4);
+    startPayPolling(ref);
+  } catch(e) { addLog('✗ ' + e.message, 'e'); resetPayConfirmBtn(); return; }
+}
+
+function resetPayConfirmBtn() {
+  const btn = document.getElementById('pay-confirm-btn');
+  btn.disabled = false;
+  btn.textContent = 'Confirm & Send USSD Push';
+}
+
+async function startPayPolling(ref) {
+  let attempts = 0;
+  const circle = document.getElementById('pay-status-circle');
+  const title = document.getElementById('pay-status-title');
+  const desc = document.getElementById('pay-status-desc');
+  const progress = document.getElementById('pay-poll-progress');
+  const label = document.getElementById('pay-poll-label');
+
+  const interval = setInterval(async () => {
+    attempts++;
+    const pct = Math.min(Math.round((attempts / 24) * 100), 100);
+    progress.style.width = pct + '%';
+    label.textContent = `Poll #${attempts} — checking status…`;
+
+    if (attempts > 24) {
+      clearInterval(interval);
+      circle.className = 'status-circle failed';
+      circle.innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>';
+      title.textContent = 'Polling Timeout';
+      desc.textContent = 'Check the ClickPesa dashboard for the transaction status.';
+      addLog('⚠ Polling timeout. Check ClickPesa dashboard.', 'w');
+      document.getElementById('pay-new-btn').style.display = '';
+      return;
+    }
+
+    try {
+      const r = await fetch('/api/status?orderReference=' + encodeURIComponent(ref));
+      const d = await r.json();
+      addLog(`Poll #${attempts} → ${d.status}`);
+
+      if (d.status === 'SUCCESS' || d.status === 'SETTLED') {
+        clearInterval(interval);
+        circle.className = 'status-circle success';
+        circle.innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+        title.textContent = 'Payment Successful!';
+        desc.textContent = `TZS ${Number(d.collectedAmount || d.amount).toLocaleString()} received via ${d.channel || provNames[currentProvider]}`;
+        progress.style.width = '100%';
+        progress.style.background = 'var(--green)';
+        label.textContent = 'Complete';
+        addLog(`✓ PAYMENT SUCCESS · TZS ${Number(d.collectedAmount || d.amount).toLocaleString()}`, 's');
+        updateTxStatus(ref, 'SUCCESS');
+        successCount++;
+        updateDashboard();
+        fetchBalance();
+        document.getElementById('pay-new-btn').style.display = '';
+      } else if (d.status === 'FAILED') {
+        clearInterval(interval);
+        circle.className = 'status-circle failed';
+        circle.innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>';
+        title.textContent = 'Payment Failed';
+        desc.textContent = 'The payment was declined or timed out on the customer\'s phone.';
+        progress.style.width = '100%';
+        progress.style.background = 'var(--red)';
+        label.textContent = 'Failed';
+        addLog('✗ Payment FAILED', 'e');
+        updateTxStatus(ref, 'FAILED');
+        updateDashboard();
+        document.getElementById('pay-new-btn').style.display = '';
+      }
+    } catch(e) { addLog('Poll error: ' + e.message, 'e'); }
+  }, 5000);
+}
+
+function resetPayment() {
+  currentPayStep = 1;
+  document.getElementById('pay-name').value = '';
+  document.getElementById('pay-phone').value = '';
+  document.getElementById('pay-amount').value = '';
+  document.getElementById('pay-ref').value = '';
+  updatePaySummary();
+  resetPayConfirmBtn();
+
+  // Reset status area
+  document.getElementById('pay-status-circle').className = 'status-circle waiting';
+  document.getElementById('pay-status-circle').innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>';
+  document.getElementById('pay-status-title').textContent = 'Waiting for PIN…';
+  document.getElementById('pay-status-desc').textContent = 'A USSD prompt has been sent to the customer\'s phone.';
+  document.getElementById('pay-poll-progress').style.width = '0%';
+  document.getElementById('pay-poll-progress').style.background = 'var(--amber)';
+  document.getElementById('pay-poll-label').textContent = 'Polling for status…';
+  document.getElementById('pay-new-btn').style.display = 'none';
+
+  payStep(1);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// PAYOUT WIZARD
+// ═════════════════════════════════════════════════════════════════════════════
+function poStep(step) {
+  if (step === 2) {
+    const name = document.getElementById('po-name').value.trim();
+    const phone = document.getElementById('po-phone').value.trim();
+    const amount = parseFloat(document.getElementById('po-amount').value);
+    const ref = document.getElementById('po-ref').value.trim();
+    let hasError = false;
+
+    if (!name) { document.getElementById('po-name').classList.add('error'); hasError = true; addLog('⚠ Name is required', 'w'); }
+    else { document.getElementById('po-name').classList.remove('error'); }
+
+    if (!phone || phone.length < 9) { document.getElementById('po-phone-wrap').classList.add('error'); hasError = true; addLog('⚠ Enter a valid 9-digit phone number', 'w'); }
+    else { document.getElementById('po-phone-wrap').classList.remove('error'); }
+
+    if (!amount || amount < 100) { document.getElementById('po-amount').classList.add('error'); hasError = true; addLog('⚠ Minimum amount is TZS 100', 'w'); }
+    else { document.getElementById('po-amount').classList.remove('error'); }
+
+    if (ref && !isValidRef(ref)) { document.getElementById('po-ref').classList.add('error'); hasError = true; addLog('⚠ Reference must be alphanumeric only', 'w'); }
+    else { document.getElementById('po-ref').classList.remove('error'); }
+
+    if (hasError) return;
+
+    populatePoConfirm();
+  }
+
+  currentPoStep = step;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('po-step-' + i).classList.toggle('active', i === step);
+  }
+
+  // Stepper
+  for (let i = 1; i <= 3; i++) {
+    const sn = document.getElementById('po-sn-' + i);
+    const sl = document.getElementById('po-sl-' + i);
+    const parent = sn.closest('.stepper-step');
+    parent.classList.remove('upcoming');
+    sn.className = 'step-number';
+    sl.className = 'step-status-label';
+
+    if (i < step) {
+      sn.classList.add('complete'); sn.innerHTML = '<svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+      sl.classList.add('complete'); sl.textContent = 'Complete';
+    } else if (i === step) {
+      sn.classList.add('current'); sn.textContent = i;
+      sl.classList.add('current'); sl.textContent = 'Current';
+    } else {
+      parent.classList.add('upcoming');
+      sn.classList.add('upcoming'); sn.textContent = i;
+      sl.classList.add('upcoming'); sl.textContent = 'Upcoming';
+    }
+  }
+}
+
+function updatePoSummary() {
+  const amt = parseFloat(document.getElementById('po-amount').value) || 0;
+  const fee = Math.round(amt * 0.01);
+  document.getElementById('po-s-amt').textContent = fmt(amt);
+  document.getElementById('po-s-fee').textContent = fmt(fee);
+  document.getElementById('po-s-total').textContent = fmt(amt + fee);
+}
+
+function populatePoConfirm() {
+  const name = document.getElementById('po-name').value.trim();
+  const phone = document.getElementById('po-phone').value.trim();
+  const amount = parseFloat(document.getElementById('po-amount').value);
+  const ref = document.getElementById('po-ref').value.trim() || genRef();
+  const fee = Math.round(amount * 0.01);
+
+  document.getElementById('po-ref').value = ref;
+  document.getElementById('po-c-name').textContent = name;
+  document.getElementById('po-c-phone').textContent = '+255 ' + phone;
+  document.getElementById('po-c-amount').textContent = fmt(amount);
+  document.getElementById('po-c-fee').textContent = fmt(fee);
+  document.getElementById('po-c-total').textContent = fmt(amount + fee);
+  document.getElementById('po-c-ref').textContent = ref;
+}
+
+async function executePayout() {
+  const name = document.getElementById('po-name').value.trim();
+  const phone = document.getElementById('po-phone').value.trim();
+  const amount = parseFloat(document.getElementById('po-amount').value);
+  const ref = document.getElementById('po-ref').value.trim();
+  const fullPhone = '255' + phone;
+
+  const btn = document.getElementById('po-confirm-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Processing…';
+
+  addLog(`Initiating payout → ${name} (+${fullPhone}) · TZS ${amount.toLocaleString()}`);
+
+  // Preview
+  try {
+    addLog('Payout Step 1 → Previewing…');
+    const prev = await fetch('/api/payout/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
+    });
+    const pd = await prev.json();
+    if (!prev.ok) { addLog('✗ Preview failed: ' + JSON.stringify(pd.error), 'e'); resetPoConfirmBtn(); return; }
+    addLog('✓ Payout preview OK', 's');
+  } catch(e) { addLog('✗ ' + e.message, 'e'); resetPoConfirmBtn(); return; }
+
+  // Create
+  try {
+    addLog('Payout Step 2 → Executing…');
+    const create = await fetch('/api/payout/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
+    });
+    const cd = await create.json();
+    if (!create.ok) { addLog('✗ Payout failed: ' + JSON.stringify(cd.error), 'e'); resetPoConfirmBtn(); return; }
+    addLog(`✓ Payout sent! Ref: ${ref}`, 's');
+
+    addTx({ ref, name, phone: fullPhone, amount, provider: 'MPESA', status: 'PROCESSING', type: 'payout' });
+    payoutCount++;
+    totalCount++;
+    updateDashboard();
+
+    poStep(3);
+    startPoPolling(ref);
+  } catch(e) { addLog('✗ ' + e.message, 'e'); resetPoConfirmBtn(); }
+}
+
+function resetPoConfirmBtn() {
+  const btn = document.getElementById('po-confirm-btn');
+  btn.disabled = false;
+  btn.textContent = 'Confirm & Send Payout';
+}
+
+async function startPoPolling(ref) {
+  let attempts = 0;
+  const circle = document.getElementById('po-status-circle');
+  const title = document.getElementById('po-status-title');
+  const desc = document.getElementById('po-status-desc');
+
+  const interval = setInterval(async () => {
+    attempts++;
+    if (attempts > 12) {
+      clearInterval(interval);
+      title.textContent = 'Check Dashboard';
+      desc.textContent = 'Payout may still be processing. Check ClickPesa dashboard.';
+      addLog('⚠ Payout polling timeout.', 'w');
+      document.getElementById('po-new-btn').style.display = '';
+      return;
+    }
+    try {
+      const r = await fetch('/api/payout/status?orderReference=' + encodeURIComponent(ref));
+      const d = await r.json();
+      addLog(`Payout poll #${attempts} → ${d.status || 'checking'}`);
+      if (d.status === 'SUCCESS' || d.status === 'SETTLED' || d.status === 'COMPLETED') {
+        clearInterval(interval);
+        circle.className = 'status-circle success';
+        circle.innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+        title.textContent = 'Payout Successful!';
+        desc.textContent = `TZS ${parseFloat(document.getElementById('po-amount').value).toLocaleString()} sent to +255${document.getElementById('po-phone').value}`;
+        addLog('✓ Payout SUCCESS', 's');
+        updateTxStatus(ref, 'SUCCESS');
+        successCount++;
+        updateDashboard();
+        fetchBalance();
+        document.getElementById('po-new-btn').style.display = '';
+      } else if (d.status === 'FAILED') {
+        clearInterval(interval);
+        circle.className = 'status-circle failed';
+        circle.innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>';
+        title.textContent = 'Payout Failed';
+        desc.textContent = 'The payout could not be processed.';
+        addLog('✗ Payout FAILED', 'e');
+        updateTxStatus(ref, 'FAILED');
+        updateDashboard();
+        document.getElementById('po-new-btn').style.display = '';
+      }
+    } catch(e) { addLog('Payout poll error: ' + e.message, 'e'); }
+  }, 5000);
+}
+
+function resetPayout() {
+  document.getElementById('po-name').value = '';
+  document.getElementById('po-phone').value = '';
+  document.getElementById('po-amount').value = '';
+  document.getElementById('po-ref').value = '';
+  updatePoSummary();
+  resetPoConfirmBtn();
+  document.getElementById('po-status-circle').className = 'status-circle waiting';
+  document.getElementById('po-status-circle').innerHTML = '<svg class="icon-svg" style="width:36px;height:36px;" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>';
+  document.getElementById('po-status-title').textContent = 'Processing Payout…';
+  document.getElementById('po-status-desc').textContent = 'Sending funds to the recipient\'s mobile wallet.';
+  document.getElementById('po-new-btn').style.display = 'none';
+  poStep(1);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// BULK PAYOUT WIZARD
+// ═════════════════════════════════════════════════════════════════════════════
+function setBulkMode(mode) {
+  bulkMode = mode;
+  document.getElementById('bulk-toggle-diff').classList.toggle('active', mode === 'diff');
+  document.getElementById('bulk-toggle-same').classList.toggle('active', mode === 'same');
+  
+  if (mode === 'same') {
+    document.getElementById('bulk-fixed-amount-group').style.display = 'block';
+    document.getElementById('bulk-th-amount').style.display = 'none';
+  } else {
+    document.getElementById('bulk-fixed-amount-group').style.display = 'none';
+    document.getElementById('bulk-th-amount').style.display = '';
+  }
+  
+  renderBulkTable();
+}
+
+function addBulkRow() {
+  bulkRows.push({ id: Date.now(), name: '', phone: '', amount: '' });
+  renderBulkTable();
+}
+
+function removeBulkRow(id) {
+  bulkRows = bulkRows.filter(r => r.id !== id);
+  if (bulkRows.length === 0) addBulkRow();
+  else renderBulkTable();
+}
+
+function updateBulkRow(id, field, value) {
+  const row = bulkRows.find(r => r.id === id);
+  if (row) {
+    row[field] = value;
+    updateBulkSummary();
+  }
+}
+
+function renderBulkTable() {
+  const tbody = document.getElementById('bulk-tbody');
+  tbody.innerHTML = bulkRows.map((r, i) => `
+    <tr>
+      <td><input type="text" class="form-input" placeholder="Name" value="${r.name}" oninput="updateBulkRow(${r.id}, 'name', this.value)" /></td>
+      <td><input type="tel" class="form-input" placeholder="7XX XXX XXX" maxlength="9" value="${r.phone}" oninput="updateBulkRow(${r.id}, 'phone', this.value)" /></td>
+      ${bulkMode === 'diff' ? `<td><input type="number" class="form-input" placeholder="Amount" min="100" value="${r.amount}" oninput="updateBulkRow(${r.id}, 'amount', this.value)" /></td>` : ''}
+      <td style="text-align:right;">
+        <button class="bulk-remove-btn" onclick="removeBulkRow(${r.id})">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+  updateBulkSummary();
+}
+
+function updateBulkSummary() {
+  const fixedAmt = parseFloat(document.getElementById('bulk-fixed-amount').value) || 0;
+  
+  // Count valid rows
+  const validRows = bulkRows.filter(r => {
+    if (!r.name || !r.phone || r.phone.length < 9) return false;
+    if (bulkMode === 'diff' && (!r.amount || parseFloat(r.amount) < 100)) return false;
+    return true;
+  });
+
+  document.getElementById('bulk-sum-count').textContent = validRows.length;
+
+  let totalAmt = 0;
+  if (bulkMode === 'same') {
+    totalAmt = validRows.length * fixedAmt;
+  } else {
+    totalAmt = validRows.reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
+  }
+
+  const fee = Math.round(totalAmt * 0.01); // 1% estimation
+  
+  document.getElementById('bulk-sum-amt').textContent = fmt(totalAmt);
+  document.getElementById('bulk-sum-fee').textContent = fmt(fee);
+}
+
+async function executeBulkPayout() {
+  const fixedAmt = parseFloat(document.getElementById('bulk-fixed-amount').value) || 0;
+  
+  // Validate rows
+  const validRows = bulkRows.filter(r => {
+    if (!r.name || !r.phone || r.phone.length < 9) return false;
+    if (bulkMode === 'diff' && (!r.amount || parseFloat(r.amount) < 100)) return false;
+    return true;
+  });
+
+  if (validRows.length === 0) {
+    addLog('⚠ Please add valid recipients before starting bulk payout', 'w');
+    return;
+  }
+
+  if (bulkMode === 'same' && fixedAmt < 100) {
+    addLog('⚠ Fixed amount must be at least TZS 100', 'w');
+    document.getElementById('bulk-fixed-amount').classList.add('error');
+    return;
+  }
+  document.getElementById('bulk-fixed-amount').classList.remove('error');
+
+  if (!confirm(`Are you sure you want to send payouts to ${validRows.length} recipients?`)) return;
+
+  // Switch to progress UI
+  document.getElementById('bulk-setup-card').style.display = 'none';
+  document.getElementById('bulk-progress-card').style.display = 'block';
+  document.getElementById('bulk-log').innerHTML = '';
+
+  const total = validRows.length;
+  let success = 0;
+  let failed = 0;
+
+  document.getElementById('bulk-progress-title').textContent = 'Processing Payouts...';
+  document.getElementById('bulk-progress-count').textContent = `0 / ${total}`;
+  document.getElementById('bulk-progress-fill').style.width = '0%';
+  document.getElementById('bulk-progress-fill').style.background = 'var(--blue)';
+
+  for (let i = 0; i < total; i++) {
+    const r = validRows[i];
+    const amount = bulkMode === 'same' ? fixedAmt : parseFloat(r.amount);
+    const fullPhone = '255' + r.phone;
+    const ref = genRef();
+
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-time">${ts()}</span><span class="log-info">Sending ${fmt(amount)} to ${r.name} (+${fullPhone})...</span>`;
+    document.getElementById('bulk-log').appendChild(line);
+
+    try {
+      // Execute directly
+      const create = await fetch('/api/payout/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
+      });
+      const cd = await create.json();
+      
+      if (create.ok) {
+        success++;
+        line.innerHTML += ` <span class="log-success">✓ Sent (Ref: ${ref})</span>`;
+        addTx({ ref, name: r.name, phone: fullPhone, amount, provider: 'MPESA', status: 'PROCESSING', type: 'payout' });
+        payoutCount++;
+        totalCount++;
+        startPoPolling(ref); // start polling in background
+      } else {
+        failed++;
+        line.innerHTML += ` <span class="log-error">✗ Failed: ${cd.error?.message || 'Unknown error'}</span>`;
+      }
+    } catch (e) {
+      failed++;
+      line.innerHTML += ` <span class="log-error">✗ Error: ${e.message}</span>`;
+    }
+
+    const pct = Math.round(((i + 1) / total) * 100);
+    document.getElementById('bulk-progress-fill').style.width = pct + '%';
+    document.getElementById('bulk-progress-count').textContent = `${i + 1} / ${total}`;
+    document.getElementById('bulk-log').scrollTop = document.getElementById('bulk-log').scrollHeight;
+  }
+
+  updateDashboard();
+
+  document.getElementById('bulk-progress-title').textContent = 'Bulk Payout Completed';
+  document.getElementById('bulk-progress-desc').textContent = `${success} successful, ${failed} failed.`;
+  document.getElementById('bulk-progress-fill').style.background = failed === 0 ? 'var(--green)' : (success === 0 ? 'var(--red)' : 'var(--amber)');
+  document.getElementById('bulk-reset-btn').style.display = '';
+}
+
+function resetBulkPayout() {
+  document.getElementById('bulk-setup-card').style.display = 'block';
+  document.getElementById('bulk-progress-card').style.display = 'none';
+  document.getElementById('bulk-reset-btn').style.display = 'none';
+  bulkRows = [];
+  addBulkRow();
+  document.getElementById('bulk-fixed-amount').value = '';
+  updateBulkSummary();
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// TRANSACTION MANAGEMENT
+// ═════════════════════════════════════════════════════════════════════════════
+function addTx(tx) {
+  txHistory.unshift({ ...tx, time: new Date() });
+  document.getElementById('tx-count').textContent = txHistory.length;
+  renderTransactions();
+  renderDashRecent();
+}
+
+function updateTxStatus(ref, status) {
+  const tx = txHistory.find(t => t.ref === ref);
+  if (tx) tx.status = status;
+  renderTransactions();
+  renderDashRecent();
+}
+
+function renderTransactions() {
+  const tbody = document.getElementById('tx-tbody');
+  const empty = document.getElementById('tx-empty');
+  const search = document.getElementById('tx-search').value.toLowerCase();
+
+  let filtered = txHistory.filter(tx => {
+    if (txFilter !== 'all' && tx.type !== txFilter) return false;
+    if (search && !tx.ref.toLowerCase().includes(search) && !tx.phone.includes(search) && !(tx.name && tx.name.toLowerCase().includes(search))) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+
+  empty.style.display = 'none';
+  const statusClass = { SUCCESS:'status-success', PROCESSING:'status-processing', FAILED:'status-failed' };
+  const statusLabel = { SUCCESS:'Success', PROCESSING:'Processing', FAILED:'Failed' };
+
+  tbody.innerHTML = filtered.map(tx => `
+    <tr>
+      <td class="ref-cell">${tx.ref}</td>
+      <td style="font-weight:600;">${tx.name || 'Anonymous'}</td>
+      <td>${tx.type === 'payment' ? '📥 Payment' : '📤 Payout'}</td>
+      <td>
+        <div class="provider-cell">
+          <div class="provider-dot" style="background:${provColors[tx.provider] || '#999'}"></div>
+          ${provNames[tx.provider] || tx.provider}
+        </div>
+      </td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">+${tx.phone}</td>
+      <td class="amount-cell">${fmt(tx.amount)}</td>
+      <td><span class="tx-status ${statusClass[tx.status] || ''}">${statusLabel[tx.status] || tx.status}</span></td>
+      <td style="font-size:12px;color:var(--text-secondary);">${tx.time.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}</td>
+    </tr>
+  `).join('');
+}
+
+function filterTransactions() { renderTransactions(); }
+
+function filterType(type, el) {
+  txFilter = type;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderTransactions();
+}
+
+function renderDashRecent() {
+  const container = document.getElementById('dash-recent-tx');
+  if (!txHistory.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><svg class="icon-svg" style="width:32px;height:32px;" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>No transactions yet. Send your first payment!</div>';
+    return;
+  }
+
+  const recent = txHistory.slice(0, 5);
+  const statusClass = { SUCCESS:'status-success', PROCESSING:'status-processing', FAILED:'status-failed' };
+  const statusLabel = { SUCCESS:'Success', PROCESSING:'Processing', FAILED:'Failed' };
+
+  container.innerHTML = '<div class="tx-list">' + recent.map(tx => `
+    <div class="tx-row">
+      <div class="tx-avatar" style="background:${provColors[tx.provider] || '#999'}">${provShort[tx.provider] || '??'}</div>
+      <div class="tx-details">
+        <div class="tx-name">${tx.name || tx.ref}</div>
+        <div class="tx-meta">+${tx.phone} · ${tx.time.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amount">${tx.type === 'payout' ? '-' : ''}${fmt(tx.amount)}</div>
+        <span class="tx-status ${statusClass[tx.status] || ''}">${statusLabel[tx.status] || tx.status}</span>
+      </div>
+    </div>
+  `).join('') + '</div>';
+}
+
+function updateDashboard() {
+  document.getElementById('dash-payments').textContent = paymentCount;
+  document.getElementById('dash-payouts').textContent = payoutCount;
+  if (totalCount > 0) {
+    const rate = Math.round((successCount / totalCount) * 100);
+    document.getElementById('dash-rate').textContent = rate + '%';
+  }
+}
+
+addLog('PesaFlow v2.1 loaded.');
+</script>
+</body>
+</html>
