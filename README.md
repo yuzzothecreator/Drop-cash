@@ -1,4 +1,4 @@
-# 💸 Drap Cash
+# 💸 Drop Cash
 
 **Tanzania Mobile Money Payment Gateway** — Collect payments and send payouts via M-Pesa, Airtel Money, HaloPesa & YAS through a single ClickPesa integration.
 
@@ -31,8 +31,8 @@
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/drap-cash.git
-cd drap-cash
+git clone https://github.com/your-username/drop-cash.git
+cd drop-cash
 
 # 2. Install dependencies
 npm install
@@ -70,7 +70,7 @@ Get your API keys from the [ClickPesa Dashboard](https://dashboard.clickpesa.com
 ## 📁 Project Structure
 
 ```
-drap-cash/
+drop-cash/
 ├── .env                 ← Your secrets (git-ignored)
 ├── .env.example         ← Template for other developers
 ├── .gitignore           ← Excludes .env, node_modules, logs
@@ -151,8 +151,8 @@ npx ngrok http 3000
 
 ```bash
 # On your server
-git clone https://github.com/your-username/drap-cash.git
-cd drap-cash
+git clone https://github.com/your-username/drop-cash.git
+cd drop-cash
 npm install --production
 cp .env.example .env
 # Edit .env with your credentials
@@ -163,7 +163,7 @@ Use PM2 for process management:
 
 ```bash
 npm install -g pm2
-pm2 start server.js --name drap-cash
+pm2 start server.js --name drop-cash
 pm2 save
 ```
 

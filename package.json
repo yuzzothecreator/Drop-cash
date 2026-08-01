@@ -1,7 +1,7 @@
 {
-  "name": "drap-cash",
+  "name": "drop-cash",
   "version": "2.0.0",
-  "description": "Drap Cash — Tanzania Mobile Money Payment Gateway Dashboard. Collect payments and send payouts via M-Pesa, Airtel Money, HaloPesa & YAS through ClickPesa.",
+  "description": "Drop Cash — Tanzania Mobile Money Payment Gateway Dashboard. Collect payments and send payouts via M-Pesa, Airtel Money, HaloPesa & YAS through ClickPesa.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,7 @@
     "clickpesa",
     "payment-gateway",
     "ussd-push",
-    "drap-cash"
+    "drop-cash"
   ],
   "license": "MIT",
   "dependencies": {

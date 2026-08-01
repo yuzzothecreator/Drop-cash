@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Drap Cash — Tanzania Mobile Money Payment Gateway. Send payments and payouts via M-Pesa, Airtel Money, HaloPesa & YAS." />
-<title>Drap Cash — Mobile Money Gateway</title>
+<meta name="description" content="Drop Cash — Tanzania Mobile Money Payment Gateway. Send payments and payouts via M-Pesa, Airtel Money, HaloPesa & YAS." />
+<title>Drop Cash — Mobile Money Gateway</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
-   Drap Cash — Design System
+   Drop Cash — Design System
    ═══════════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -61,6 +61,8 @@
   --radius: 12px;
   --radius-sm: 8px;
   --radius-xs: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
   /* Sidebar */
@@ -127,11 +129,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
   color: white;
-  letter-spacing: -0.03em;
   flex-shrink: 0;
+}
+.brand-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .brand-text h1 {
@@ -1575,6 +1583,125 @@ body {
   color: var(--text);
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* ─── My People ─── */
+.people-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.people-list, .group-list { display: flex; flex-direction: column; gap: 8px; }
+.person-row, .group-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.person-avatar, .group-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--green-bg);
+  color: var(--green-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.group-avatar { background: var(--blue-bg); color: var(--blue-text); }
+.person-info, .group-info { flex: 1; min-width: 0; }
+.person-name, .group-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+.person-phone, .group-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+}
+.person-actions, .group-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.member-checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 8px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+.member-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 6px 8px;
+  background: var(--surface);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.member-check input { accent-color: var(--green-text); }
+.review-list { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; max-height: 320px; overflow-y: auto; }
+.review-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+}
+.review-name { font-weight: 700; font-size: 15px; flex: 1; }
+.review-phone { font-size: 12px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+.review-amt { font-weight: 600; font-size: 13px; white-space: nowrap; }
+.csv-drop {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  text-align: center;
+  background: var(--surface-sunken);
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+.csv-drop:hover, .csv-drop.dragover { border-color: var(--green); background: var(--green-bg); }
+.csv-drop input[type=file] { display: none; }
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+.modal-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.modal-card .modal-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 18px; }
 </style>
 </head>
 <body>
@@ -1584,17 +1711,17 @@ body {
   <button class="menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
   </button>
-  <div class="brand-icon">DC</div>
-  <span style="color:white;font-weight:600;font-size:14px;">Drap Cash</span>
+  <div class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M12 8c-3 4-5 6.5-5 9a5 5 0 0 0 10 0c0-2.5-2-5-5-9z"/><circle cx="12" cy="16" r="1.5" fill="white" stroke="none"/></svg></div>
+  <span style="color:white;font-weight:600;font-size:14px;">Drop Cash</span>
 </div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- ═══ Sidebar ═══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
-    <div class="brand-icon">DC</div>
+    <div class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M12 8c-3 4-5 6.5-5 9a5 5 0 0 0 10 0c0-2.5-2-5-5-9z"/><circle cx="12" cy="16" r="1.5" fill="white" stroke="none"/></svg></div>
     <div class="brand-text">
-      <h1>Drap Cash</h1>
+      <h1>Drop Cash</h1>
       <span>Mobile Money Gateway</span>
     </div>
   </div>
@@ -1616,6 +1743,9 @@ body {
     <button class="nav-item" onclick="switchView('transactions')" data-view="transactions">
       <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span> Transactions
       <span class="nav-badge" id="tx-count">0</span>
+    </button>
+    <button class="nav-item" onclick="switchView('people')" data-view="people">
+      <span class="nav-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> My People
     </button>
 
     <div class="nav-label">System</div>
@@ -1644,7 +1774,7 @@ body {
   <div class="view active" id="view-dashboard">
     <div class="page-header">
       <h2>Dashboard</h2>
-      <p>Overview of your Drap Cash payment gateway</p>
+      <p>Overview of your Drop Cash payment gateway</p>
     </div>
     <div class="page-content">
 
@@ -1699,11 +1829,11 @@ body {
                 <div class="quick-btn-sub">Full history &amp; search</div>
               </div>
             </button>
-            <button class="quick-btn" onclick="switchView('bulk-payout')">
-              <div class="quick-btn-icon" style="background:var(--surface-sunken);color:var(--text)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <button class="quick-btn" onclick="switchView('people')">
+              <div class="quick-btn-icon" style="background:var(--green-bg);color:var(--green-text)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
               <div>
-                <div class="quick-btn-text">Bulk Payouts</div>
-                <div class="quick-btn-sub">Disburse to multiple people</div>
+                <div class="quick-btn-text">My People</div>
+                <div class="quick-btn-sub">Contacts, groups &amp; CSV import</div>
               </div>
             </button>
           </div>
@@ -2137,7 +2267,27 @@ body {
         </div>
 
         <div class="btn-group" style="justify-content:flex-end;">
-          <button class="btn btn-primary" id="bulk-execute-btn" onclick="executeBulkPayout()">Review & Start Bulk Payout →</button>
+          <button class="btn btn-primary" id="bulk-execute-btn" onclick="showBulkReview()">Review Recipients →</button>
+        </div>
+      </div>
+
+      <div class="card" id="bulk-review-card" style="display:none;">
+        <div class="card-header"><span class="card-title">Verify Recipients</span></div>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Check each <strong>name</strong> carefully before sending money.</p>
+        <div class="bulk-summary" style="margin-bottom:8px;">
+          <div class="bulk-stat">
+            <div class="bulk-stat-label">Recipients</div>
+            <div class="bulk-stat-value" id="bulk-review-count">0</div>
+          </div>
+          <div class="bulk-stat">
+            <div class="bulk-stat-label">Total Amount</div>
+            <div class="bulk-stat-value" id="bulk-review-amt">TZS 0</div>
+          </div>
+        </div>
+        <div class="review-list" id="bulk-review-list"></div>
+        <div class="btn-group" style="justify-content:space-between;">
+          <button class="btn btn-secondary" onclick="cancelBulkReview()">← Back</button>
+          <button class="btn btn-primary" onclick="confirmBulkPayout()">Confirm &amp; Send Payouts</button>
         </div>
       </div>
 
@@ -2205,6 +2355,50 @@ body {
           No transactions yet.
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MY PEOPLE VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-people">
+    <div class="page-header">
+      <h2>My People</h2>
+      <p>Save contacts, import CSV, create groups, and send payouts</p>
+    </div>
+    <div class="page-content">
+
+      <div class="toggle-group">
+        <button class="toggle-btn active" id="people-tab-people" onclick="setPeopleTab('people')">People</button>
+        <button class="toggle-btn" id="people-tab-groups" onclick="setPeopleTab('groups')">Groups</button>
+      </div>
+
+      <!-- People tab -->
+      <div id="people-panel-people">
+        <div class="people-toolbar">
+          <button class="btn btn-primary" onclick="openPersonModal()">+ Add Person</button>
+          <button class="btn btn-secondary" onclick="openCsvModal()">Import CSV</button>
+          <a class="btn btn-secondary" href="/sample-people.csv" download>Download sample CSV</a>
+        </div>
+        <div class="people-list" id="people-list"></div>
+        <div class="empty-state" id="people-empty" style="display:none;">
+          <div class="empty-state-icon"><svg class="icon-svg" style="width:32px;height:32px;" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          No people yet. Add someone or import a CSV.
+        </div>
+      </div>
+
+      <!-- Groups tab -->
+      <div id="people-panel-groups" style="display:none;">
+        <div class="people-toolbar">
+          <button class="btn btn-primary" onclick="openGroupModal()">+ Create Group</button>
+        </div>
+        <div class="group-list" id="group-list"></div>
+        <div class="empty-state" id="groups-empty" style="display:none;">
+          <div class="empty-state-icon"><svg class="icon-svg" style="width:32px;height:32px;" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          No groups yet. Create a group from your people.
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -2332,6 +2526,99 @@ body {
 
 </main>
 
+<!-- Modals -->
+<div class="modal-overlay" id="modal-person" onclick="if(event.target===this)closeModals()">
+  <div class="modal-card">
+    <h3 id="person-modal-title">Add Person</h3>
+    <p class="modal-sub">Saved to My People on this device</p>
+    <input type="hidden" id="person-edit-id" />
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-input" id="person-name" placeholder="John Doe" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone</label>
+      <div class="phone-input-row">
+        <span class="phone-prefix">+255</span>
+        <input type="tel" class="form-input" id="person-phone" placeholder="7XX XXX XXX" maxlength="9" />
+      </div>
+    </div>
+    <div class="btn-group" style="justify-content:flex-end;">
+      <button class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePerson()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-group" onclick="if(event.target===this)closeModals()">
+  <div class="modal-card">
+    <h3 id="group-modal-title">Create Group</h3>
+    <p class="modal-sub">Select people to include in this group</p>
+    <input type="hidden" id="group-edit-id" />
+    <div class="form-group">
+      <label class="form-label">Group Name</label>
+      <input type="text" class="form-input" id="group-name" placeholder="Staff, Family…" />
+    </div>
+    <label class="form-label">Members</label>
+    <div class="member-checks" id="group-member-checks"></div>
+    <div class="btn-group" style="justify-content:flex-end;">
+      <button class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGroup()">Save Group</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-csv" onclick="if(event.target===this)closeModals()">
+  <div class="modal-card" style="max-width:640px;">
+    <h3>Import CSV</h3>
+    <p class="modal-sub">Columns: <code>name</code>, <code>phone</code>, optional <code>amount</code></p>
+    <label class="csv-drop" id="csv-drop" for="csv-file-input">
+      <div style="font-weight:600;margin-bottom:6px;">Attach CSV file</div>
+      <div style="font-size:12px;color:var(--text-secondary);">Click or drop a .csv file here</div>
+      <input type="file" id="csv-file-input" accept=".csv,text/csv" onchange="handleCsvFile(this.files[0])" />
+    </label>
+    <div id="csv-preview-wrap" style="display:none;">
+      <div class="form-group">
+        <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="csv-create-group" checked onchange="document.getElementById('csv-group-name-wrap').style.display=this.checked?'block':'none'" />
+          Also create a group from this import
+        </label>
+      </div>
+      <div class="form-group" id="csv-group-name-wrap">
+        <label class="form-label">Group Name</label>
+        <input type="text" class="form-input" id="csv-group-name" placeholder="CSV Import" />
+      </div>
+      <div class="review-list" id="csv-preview-list" style="max-height:240px;"></div>
+      <div class="btn-group" style="justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <button class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="installCsv(false)">Install only</button>
+          <button class="btn btn-primary" onclick="installCsv(true)">Install &amp; Send Money</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-group-send" onclick="if(event.target===this)closeModals()">
+  <div class="modal-card">
+    <h3>Send to Group</h3>
+    <p class="modal-sub" id="group-send-sub">Enter amount per person</p>
+    <input type="hidden" id="group-send-id" />
+    <div class="form-group">
+      <label class="form-label">Amount per Recipient (TZS)</label>
+      <div class="amount-wrap">
+        <span class="amount-prefix">TZS</span>
+        <input type="number" class="form-input" id="group-send-amount" placeholder="0" min="100" />
+      </div>
+    </div>
+    <div class="btn-group" style="justify-content:flex-end;">
+      <button class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="prepareGroupSend()">Review Names →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════════════════════════════════
      JAVASCRIPT
      ═══════════════════════════════════════════════════════════════════════════ -->
@@ -2342,6 +2629,9 @@ body {
 const provColors = { MPESA:'#00A651', AIRTEL:'#E4002B', HALO:'#F7941D', YAS:'#0072BB' };
 const provNames  = { MPESA:'M-Pesa', AIRTEL:'Airtel Money', HALO:'HaloPesa', YAS:'YAS' };
 const provShort  = { MPESA:'MP', AIRTEL:'AM', HALO:'HP', YAS:'YS' };
+
+const PEOPLE_KEY = 'drop-cash-people';
+const GROUPS_KEY = 'drop-cash-groups';
 
 let currentProvider = 'MPESA';
 let currentPayStep = 1;
@@ -2357,14 +2647,26 @@ let isConnected = false;
 // Bulk Payout State
 let bulkMode = 'diff'; // 'diff' or 'same'
 let bulkRows = [];
+let pendingBulkRows = null;
+let pendingBulkMode = null;
+let pendingFixedAmt = null;
+
+// My People
+let people = [];
+let groups = [];
+let csvPreviewRows = [];
 
 // ═════════════════════════════════════════════════════════════════════════════
 // INIT
 // ═════════════════════════════════════════════════════════════════════════════
 window.onload = () => {
-  addLog('Drap Cash initialized. Checking ClickPesa connection…');
+  addLog('Drop Cash initialized. Checking ClickPesa connection…');
+  loadPeopleData();
+  renderPeople();
+  renderGroups();
   checkHealth();
-  addBulkRow(); // Initialize bulk table with 1 row
+  addBulkRow();
+  setupCsvDrop();
 };
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -2380,6 +2682,11 @@ function switchView(viewId) {
 
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
+
+  if (viewId === 'people') {
+    renderPeople();
+    renderGroups();
+  }
 }
 
 function toggleSidebar() {
@@ -2460,6 +2767,19 @@ function addLog(msg, type='i') {
 }
 
 function fmt(n) { return 'TZS ' + Math.round(n).toLocaleString(); }
+
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+function normalizePhone(p) {
+  let d = String(p || '').replace(/\D/g, '');
+  if (d.startsWith('255') && d.length >= 12) d = d.slice(3);
+  if (d.startsWith('0') && d.length === 10) d = d.slice(1);
+  return d.slice(0, 9);
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
 // Generate purely alphanumeric reference
 function genRef() { return 'DC' + Date.now().toString(36).toUpperCase(); }
@@ -3024,20 +3344,31 @@ function updateBulkSummary() {
 }
 
 async function executeBulkPayout() {
+  // legacy entry — go through name review
+  showBulkReview();
+}
+
+function getValidBulkRows() {
   const fixedAmt = parseFloat(document.getElementById('bulk-fixed-amount').value) || 0;
-  
-  // Validate rows
-  const validRows = bulkRows.filter(r => {
-    if (!r.name || !r.phone || r.phone.length < 9) return false;
+  return bulkRows.filter(r => {
+    if (!r.name || !r.phone || String(r.phone).replace(/\D/g,'').length < 9) return false;
     if (bulkMode === 'diff' && (!r.amount || parseFloat(r.amount) < 100)) return false;
     return true;
-  });
+  }).map(r => ({
+    ...r,
+    phone: normalizePhone(r.phone),
+    amount: bulkMode === 'same' ? fixedAmt : parseFloat(r.amount)
+  }));
+}
+
+function showBulkReview() {
+  const fixedAmt = parseFloat(document.getElementById('bulk-fixed-amount').value) || 0;
+  const validRows = getValidBulkRows();
 
   if (validRows.length === 0) {
-    addLog('⚠ Please add valid recipients before starting bulk payout', 'w');
+    addLog('⚠ Please add valid recipients (name + phone) before reviewing', 'w');
     return;
   }
-
   if (bulkMode === 'same' && fixedAmt < 100) {
     addLog('⚠ Fixed amount must be at least TZS 100', 'w');
     document.getElementById('bulk-fixed-amount').classList.add('error');
@@ -3045,10 +3376,44 @@ async function executeBulkPayout() {
   }
   document.getElementById('bulk-fixed-amount').classList.remove('error');
 
-  if (!confirm(`Are you sure you want to send payouts to ${validRows.length} recipients?`)) return;
+  pendingBulkRows = validRows;
+  pendingBulkMode = bulkMode;
+  pendingFixedAmt = fixedAmt;
 
-  // Switch to progress UI
+  const totalAmt = validRows.reduce((s, r) => s + r.amount, 0);
+  document.getElementById('bulk-review-count').textContent = validRows.length;
+  document.getElementById('bulk-review-amt').textContent = fmt(totalAmt);
+  document.getElementById('bulk-review-list').innerHTML = validRows.map(r => `
+    <div class="review-row">
+      <div class="person-avatar">${escHtml((r.name||'?').charAt(0).toUpperCase())}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="review-name">${escHtml(r.name)}</div>
+        <div class="review-phone">+255${escHtml(r.phone)}</div>
+      </div>
+      <div class="review-amt">${fmt(r.amount)}</div>
+    </div>
+  `).join('');
+
   document.getElementById('bulk-setup-card').style.display = 'none';
+  document.getElementById('bulk-review-card').style.display = 'block';
+  document.getElementById('bulk-progress-card').style.display = 'none';
+}
+
+function cancelBulkReview() {
+  document.getElementById('bulk-review-card').style.display = 'none';
+  document.getElementById('bulk-setup-card').style.display = 'block';
+  pendingBulkRows = null;
+}
+
+async function confirmBulkPayout() {
+  const validRows = pendingBulkRows || getValidBulkRows();
+  if (!validRows || validRows.length === 0) {
+    addLog('⚠ No recipients to send', 'w');
+    return;
+  }
+
+  document.getElementById('bulk-setup-card').style.display = 'none';
+  document.getElementById('bulk-review-card').style.display = 'none';
   document.getElementById('bulk-progress-card').style.display = 'block';
   document.getElementById('bulk-log').innerHTML = '';
 
@@ -3060,34 +3425,34 @@ async function executeBulkPayout() {
   document.getElementById('bulk-progress-count').textContent = `0 / ${total}`;
   document.getElementById('bulk-progress-fill').style.width = '0%';
   document.getElementById('bulk-progress-fill').style.background = 'var(--blue)';
+  document.getElementById('bulk-reset-btn').style.display = 'none';
 
   for (let i = 0; i < total; i++) {
     const r = validRows[i];
-    const amount = bulkMode === 'same' ? fixedAmt : parseFloat(r.amount);
+    const amount = r.amount;
     const fullPhone = '255' + r.phone;
     const ref = genRef();
 
     const line = document.createElement('div');
     line.className = 'log-line';
-    line.innerHTML = `<span class="log-time">${ts()}</span><span class="log-info">Sending ${fmt(amount)} to ${r.name} (+${fullPhone})...</span>`;
+    line.innerHTML = `<span class="log-time">${ts()}</span><span class="log-info">Sending ${fmt(amount)} to <strong>${escHtml(r.name)}</strong> (+${fullPhone})...</span>`;
     document.getElementById('bulk-log').appendChild(line);
 
     try {
-      // Execute directly
       const create = await fetch('/api/payout/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount, phoneNumber: fullPhone, orderReference: ref })
       });
       const cd = await create.json();
-      
+
       if (create.ok) {
         success++;
         line.innerHTML += ` <span class="log-success">✓ Sent (Ref: ${ref})</span>`;
         addTx({ ref, name: r.name, phone: fullPhone, amount, provider: 'MPESA', status: 'PROCESSING', type: 'payout' });
         payoutCount++;
         totalCount++;
-        startPoPolling(ref); // start polling in background
+        startPoPolling(ref);
       } else {
         failed++;
         line.innerHTML += ` <span class="log-error">✗ Failed: ${cd.error?.message || 'Unknown error'}</span>`;
@@ -3104,21 +3469,355 @@ async function executeBulkPayout() {
   }
 
   updateDashboard();
-
   document.getElementById('bulk-progress-title').textContent = 'Bulk Payout Completed';
   document.getElementById('bulk-progress-desc').textContent = `${success} successful, ${failed} failed.`;
   document.getElementById('bulk-progress-fill').style.background = failed === 0 ? 'var(--green)' : (success === 0 ? 'var(--red)' : 'var(--amber)');
   document.getElementById('bulk-reset-btn').style.display = '';
+  pendingBulkRows = null;
 }
 
 function resetBulkPayout() {
   document.getElementById('bulk-setup-card').style.display = 'block';
+  document.getElementById('bulk-review-card').style.display = 'none';
   document.getElementById('bulk-progress-card').style.display = 'none';
   document.getElementById('bulk-reset-btn').style.display = 'none';
   bulkRows = [];
   addBulkRow();
   document.getElementById('bulk-fixed-amount').value = '';
   updateBulkSummary();
+}
+
+function launchBulkFromRows(rows, mode, fixedAmt) {
+  bulkMode = mode;
+  setBulkMode(mode);
+  if (mode === 'same') {
+    document.getElementById('bulk-fixed-amount').value = fixedAmt || '';
+  }
+  bulkRows = rows.map((r, i) => ({
+    id: Date.now() + i,
+    name: r.name,
+    phone: normalizePhone(r.phone),
+    amount: r.amount != null ? String(r.amount) : ''
+  }));
+  renderBulkTable();
+  switchView('bulk-payout');
+  showBulkReview();
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MY PEOPLE + CSV
+// ═════════════════════════════════════════════════════════════════════════════
+function loadPeopleData() {
+  try { people = JSON.parse(localStorage.getItem(PEOPLE_KEY) || '[]'); } catch { people = []; }
+  try { groups = JSON.parse(localStorage.getItem(GROUPS_KEY) || '[]'); } catch { groups = []; }
+}
+function savePeopleData() {
+  localStorage.setItem(PEOPLE_KEY, JSON.stringify(people));
+  localStorage.setItem(GROUPS_KEY, JSON.stringify(groups));
+}
+
+function setPeopleTab(tab) {
+  document.getElementById('people-tab-people').classList.toggle('active', tab === 'people');
+  document.getElementById('people-tab-groups').classList.toggle('active', tab === 'groups');
+  document.getElementById('people-panel-people').style.display = tab === 'people' ? '' : 'none';
+  document.getElementById('people-panel-groups').style.display = tab === 'groups' ? '' : 'none';
+}
+
+function closeModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+}
+
+function renderPeople() {
+  const list = document.getElementById('people-list');
+  const empty = document.getElementById('people-empty');
+  if (!people.length) {
+    list.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = people.map(p => `
+    <div class="person-row">
+      <div class="person-avatar">${escHtml((p.name||'?').charAt(0).toUpperCase())}</div>
+      <div class="person-info">
+        <div class="person-name">${escHtml(p.name)}</div>
+        <div class="person-phone">+255${escHtml(p.phone)}</div>
+      </div>
+      <div class="person-actions">
+        <button class="btn btn-secondary" style="padding:6px 10px;font-size:12px;" onclick="openPersonModal('${p.id}')">Edit</button>
+        <button class="btn btn-secondary" style="padding:6px 10px;font-size:12px;" onclick="deletePerson('${p.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGroups() {
+  const list = document.getElementById('group-list');
+  const empty = document.getElementById('groups-empty');
+  if (!groups.length) {
+    list.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = groups.map(g => {
+    const members = (g.memberIds || []).map(id => people.find(p => p.id === id)).filter(Boolean);
+    return `
+    <div class="group-row">
+      <div class="group-avatar">${escHtml((g.name||'G').charAt(0).toUpperCase())}</div>
+      <div class="group-info">
+        <div class="group-name">${escHtml(g.name)}</div>
+        <div class="group-meta">${members.length} member${members.length === 1 ? '' : 's'}${members.length ? ' · ' + members.map(m => escHtml(m.name)).join(', ') : ''}</div>
+      </div>
+      <div class="group-actions">
+        <button class="btn btn-primary" style="padding:6px 10px;font-size:12px;" onclick="openGroupSend('${g.id}')">Send</button>
+        <button class="btn btn-secondary" style="padding:6px 10px;font-size:12px;" onclick="openGroupModal('${g.id}')">Edit</button>
+        <button class="btn btn-secondary" style="padding:6px 10px;font-size:12px;" onclick="deleteGroup('${g.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openPersonModal(id) {
+  document.getElementById('person-edit-id').value = id || '';
+  document.getElementById('person-modal-title').textContent = id ? 'Edit Person' : 'Add Person';
+  const p = id ? people.find(x => x.id === id) : null;
+  document.getElementById('person-name').value = p ? p.name : '';
+  document.getElementById('person-phone').value = p ? p.phone : '';
+  document.getElementById('modal-person').classList.add('open');
+}
+
+function savePerson() {
+  const name = document.getElementById('person-name').value.trim();
+  const phone = normalizePhone(document.getElementById('person-phone').value);
+  if (!name) { addLog('⚠ Name is required', 'w'); return; }
+  if (phone.length < 9) { addLog('⚠ Valid 9-digit phone is required', 'w'); return; }
+  const id = document.getElementById('person-edit-id').value;
+  if (id) {
+    const p = people.find(x => x.id === id);
+    if (p) { p.name = name; p.phone = phone; }
+  } else {
+    const dup = people.find(x => x.phone === phone);
+    if (dup) { dup.name = name; }
+    else people.push({ id: uid(), name, phone });
+  }
+  savePeopleData();
+  renderPeople();
+  renderGroups();
+  closeModals();
+  addLog(`✓ Saved ${name} to My People`, 's');
+}
+
+function deletePerson(id) {
+  const p = people.find(x => x.id === id);
+  if (!p || !confirm(`Remove ${p.name} from My People?`)) return;
+  people = people.filter(x => x.id !== id);
+  groups.forEach(g => { g.memberIds = (g.memberIds || []).filter(mid => mid !== id); });
+  savePeopleData();
+  renderPeople();
+  renderGroups();
+}
+
+function openGroupModal(id) {
+  document.getElementById('group-edit-id').value = id || '';
+  document.getElementById('group-modal-title').textContent = id ? 'Edit Group' : 'Create Group';
+  const g = id ? groups.find(x => x.id === id) : null;
+  document.getElementById('group-name').value = g ? g.name : '';
+  const selected = new Set(g ? (g.memberIds || []) : []);
+  const box = document.getElementById('group-member-checks');
+  if (!people.length) {
+    box.innerHTML = '<div style="font-size:13px;color:var(--text-secondary);padding:8px;">Add people first, then create a group.</div>';
+  } else {
+    box.innerHTML = people.map(p => `
+      <label class="member-check">
+        <input type="checkbox" value="${p.id}" ${selected.has(p.id) ? 'checked' : ''} />
+        <span><strong>${escHtml(p.name)}</strong><br><span style="font-size:11px;color:var(--text-secondary);">+255${escHtml(p.phone)}</span></span>
+      </label>
+    `).join('');
+  }
+  document.getElementById('modal-group').classList.add('open');
+}
+
+function saveGroup() {
+  const name = document.getElementById('group-name').value.trim();
+  if (!name) { addLog('⚠ Group name is required', 'w'); return; }
+  const memberIds = [...document.querySelectorAll('#group-member-checks input:checked')].map(c => c.value);
+  if (!memberIds.length) { addLog('⚠ Select at least one member', 'w'); return; }
+  const id = document.getElementById('group-edit-id').value;
+  if (id) {
+    const g = groups.find(x => x.id === id);
+    if (g) { g.name = name; g.memberIds = memberIds; }
+  } else {
+    groups.push({ id: uid(), name, memberIds });
+  }
+  savePeopleData();
+  renderGroups();
+  closeModals();
+  setPeopleTab('groups');
+  addLog(`✓ Group “${name}” saved`, 's');
+}
+
+function deleteGroup(id) {
+  const g = groups.find(x => x.id === id);
+  if (!g || !confirm(`Delete group “${g.name}”?`)) return;
+  groups = groups.filter(x => x.id !== id);
+  savePeopleData();
+  renderGroups();
+}
+
+function openGroupSend(id) {
+  const g = groups.find(x => x.id === id);
+  if (!g) return;
+  const members = (g.memberIds || []).map(mid => people.find(p => p.id === mid)).filter(Boolean);
+  if (!members.length) { addLog('⚠ This group has no members', 'w'); return; }
+  document.getElementById('group-send-id').value = id;
+  document.getElementById('group-send-sub').textContent = `Send to ${g.name} · ${members.length} people`;
+  document.getElementById('group-send-amount').value = '';
+  document.getElementById('modal-group-send').classList.add('open');
+}
+
+function prepareGroupSend() {
+  const id = document.getElementById('group-send-id').value;
+  const amount = parseFloat(document.getElementById('group-send-amount').value) || 0;
+  const g = groups.find(x => x.id === id);
+  if (!g) return;
+  if (amount < 100) { addLog('⚠ Amount must be at least TZS 100', 'w'); return; }
+  const members = (g.memberIds || []).map(mid => people.find(p => p.id === mid)).filter(Boolean);
+  closeModals();
+  launchBulkFromRows(members.map(m => ({ name: m.name, phone: m.phone, amount })), 'same', amount);
+}
+
+function openCsvModal() {
+  csvPreviewRows = [];
+  document.getElementById('csv-preview-wrap').style.display = 'none';
+  document.getElementById('csv-file-input').value = '';
+  document.getElementById('csv-group-name').value = 'CSV Import ' + new Date().toLocaleDateString();
+  document.getElementById('csv-create-group').checked = true;
+  document.getElementById('csv-group-name-wrap').style.display = 'block';
+  document.getElementById('modal-csv').classList.add('open');
+}
+
+function setupCsvDrop() {
+  const drop = document.getElementById('csv-drop');
+  if (!drop) return;
+  ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); drop.classList.add('dragover');
+  }));
+  ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); drop.classList.remove('dragover');
+  }));
+  drop.addEventListener('drop', e => {
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) handleCsvFile(f);
+  });
+}
+
+function parseCsvText(text) {
+  const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim());
+  if (!lines.length) return [];
+  const split = (line) => {
+    const out = []; let cur = ''; let q = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { q = !q; continue; }
+      if (c === ',' && !q) { out.push(cur.trim()); cur = ''; continue; }
+      cur += c;
+    }
+    out.push(cur.trim());
+    return out;
+  };
+  const header = split(lines[0]).map(h => h.toLowerCase().replace(/\s+/g, ''));
+  let nameIdx = header.findIndex(h => ['name','fullname','customer','recipient'].includes(h));
+  let phoneIdx = header.findIndex(h => ['phone','phonenumber','mobile','msisdn','number'].includes(h));
+  let amountIdx = header.findIndex(h => ['amount','amt','value','tzs'].includes(h));
+  let start = 1;
+  if (nameIdx < 0 || phoneIdx < 0) {
+    // no header — assume name, phone, amount
+    nameIdx = 0; phoneIdx = 1; amountIdx = 2; start = 0;
+  }
+  const rows = [];
+  for (let i = start; i < lines.length; i++) {
+    const cols = split(lines[i]);
+    const name = (cols[nameIdx] || '').trim();
+    const phone = normalizePhone(cols[phoneIdx] || '');
+    const amountRaw = amountIdx >= 0 ? cols[amountIdx] : '';
+    const amount = amountRaw ? parseFloat(String(amountRaw).replace(/,/g, '')) : null;
+    if (!name && !phone) continue;
+    rows.push({
+      name,
+      phone,
+      amount: amount && amount >= 100 ? amount : null,
+      ok: !!(name && phone.length >= 9)
+    });
+  }
+  return rows;
+}
+
+function handleCsvFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    csvPreviewRows = parseCsvText(String(reader.result || ''));
+    const ok = csvPreviewRows.filter(r => r.ok);
+    if (!ok.length) {
+      addLog('⚠ No valid rows found. Need name and phone columns.', 'w');
+      document.getElementById('csv-preview-wrap').style.display = 'none';
+      return;
+    }
+    document.getElementById('csv-preview-list').innerHTML = csvPreviewRows.map(r => `
+      <div class="review-row" style="${r.ok ? '' : 'opacity:0.5;border-color:var(--red);'}">
+        <div class="person-avatar">${escHtml((r.name||'?').charAt(0).toUpperCase())}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="review-name">${escHtml(r.name) || '<em>Missing name</em>'}</div>
+          <div class="review-phone">${r.phone.length >= 9 ? '+255' + escHtml(r.phone) : '<em>Invalid phone</em>'}</div>
+        </div>
+        <div class="review-amt">${r.amount ? fmt(r.amount) : (r.ok ? '—' : 'Skip')}</div>
+      </div>
+    `).join('');
+    document.getElementById('csv-preview-wrap').style.display = 'block';
+    addLog(`CSV loaded: ${ok.length} valid row(s)`, 's');
+  };
+  reader.readAsText(file);
+}
+
+function installCsv(andSend) {
+  const valid = csvPreviewRows.filter(r => r.ok);
+  if (!valid.length) { addLog('⚠ Nothing to install', 'w'); return; }
+
+  const installedIds = [];
+  valid.forEach(r => {
+    let p = people.find(x => x.phone === r.phone);
+    if (p) { p.name = r.name; }
+    else {
+      p = { id: uid(), name: r.name, phone: r.phone };
+      people.push(p);
+    }
+    installedIds.push(p.id);
+  });
+
+  if (document.getElementById('csv-create-group').checked) {
+    const gName = document.getElementById('csv-group-name').value.trim() || 'CSV Import';
+    groups.push({ id: uid(), name: gName, memberIds: [...new Set(installedIds)] });
+    setPeopleTab('groups');
+  }
+
+  savePeopleData();
+  renderPeople();
+  renderGroups();
+  closeModals();
+  addLog(`✓ Installed ${valid.length} people into My People`, 's');
+
+  if (andSend) {
+    const hasAmounts = valid.every(r => r.amount && r.amount >= 100);
+    if (hasAmounts) {
+      launchBulkFromRows(valid.map(r => ({ name: r.name, phone: r.phone, amount: r.amount })), 'diff');
+    } else {
+      const amt = prompt('Enter amount (TZS) for each recipient (min 100):');
+      const n = parseFloat(amt);
+      if (!n || n < 100) { addLog('⚠ Send cancelled — invalid amount', 'w'); return; }
+      launchBulkFromRows(valid.map(r => ({ name: r.name, phone: r.phone, amount: n })), 'same', n);
+    }
+  }
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -3222,7 +3921,7 @@ function updateDashboard() {
   }
 }
 
-addLog('Drap Cash v2.1 loaded.');
+addLog('Drop Cash v2.1 loaded.');
 </script>
 </body>
 </html>
