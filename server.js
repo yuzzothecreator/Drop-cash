@@ -1,4 +1,4 @@
-// ─── Drap Cash — Tanzania Mobile Money Gateway ─────────────────────────────
+// ─── Drop Cash — Tanzania Mobile Money Gateway ─────────────────────────────
 // Secure proxy server for ClickPesa API (payments + payouts)
 // Keys are loaded from .env — NEVER hardcode them in source code.
 // ────────────────────────────────────────────────────────────────────────────
@@ -40,7 +40,7 @@ async function getToken() {
   const now = Date.now();
   if (authToken && tokenExpiry && now < tokenExpiry) return authToken;
 
-  console.log('[Drap Cash] Generating new auth token...');
+  console.log('[Drop Cash] Generating new auth token...');
   const res = await axios.post(`${CLICKPESA_BASE}/generate-token`, {}, {
     headers: { 'api-key': API_KEY, 'client-id': CLIENT_ID }
   });
@@ -48,7 +48,7 @@ async function getToken() {
   if (res.data.success && res.data.token) {
     authToken = res.data.token;
     tokenExpiry = now + 55 * 60 * 1000; // 55 min (token valid 1hr)
-    console.log('[Drap Cash] Token generated OK');
+    console.log('[Drop Cash] Token generated OK');
     return authToken;
   }
   throw new Error('Failed to generate token: ' + JSON.stringify(res.data));
@@ -220,7 +220,7 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`\n  ╔══════════════════════════════════════╗`);
-  console.log(`  ║   🚀 Drap Cash is running            ║`);
+  console.log(`  ║   🚀 Drop Cash is running            ║`);
   console.log(`  ║   → http://localhost:${PORT}            ║`);
   console.log(`  ║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(19)}║`);
   console.log(`  ╚══════════════════════════════════════╝\n`);
