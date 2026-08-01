@@ -1,7 +1,7 @@
 {
-  "name": "pesaflow",
+  "name": "drap-cash",
   "version": "2.0.0",
-  "description": "PesaFlow — Tanzania Mobile Money Payment Gateway Dashboard. Collect payments and send payouts via M-Pesa, Airtel Money, HaloPesa & YAS through ClickPesa.",
+  "description": "Drap Cash — Tanzania Mobile Money Payment Gateway Dashboard. Collect payments and send payouts via M-Pesa, Airtel Money, HaloPesa & YAS through ClickPesa.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,7 @@
     "clickpesa",
     "payment-gateway",
     "ussd-push",
-    "pesaflow"
+    "drap-cash"
   ],
   "license": "MIT",
   "dependencies": {

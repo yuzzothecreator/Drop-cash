@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="PesaFlow — Tanzania Mobile Money Payment Gateway. Send payments and payouts via M-Pesa, Airtel Money, HaloPesa & YAS." />
-<title>PesaFlow — Mobile Money Gateway</title>
+<meta name="description" content="Drap Cash — Tanzania Mobile Money Payment Gateway. Send payments and payouts via M-Pesa, Airtel Money, HaloPesa & YAS." />
+<title>Drap Cash — Mobile Money Gateway</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
-   PesaFlow — Design System
+   Drap Cash — Design System
    ═══════════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1584,17 +1584,17 @@ body {
   <button class="menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
   </button>
-  <div class="brand-icon">PF</div>
-  <span style="color:white;font-weight:600;font-size:14px;">PesaFlow</span>
+  <div class="brand-icon">DC</div>
+  <span style="color:white;font-weight:600;font-size:14px;">Drap Cash</span>
 </div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- ═══ Sidebar ═══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
-    <div class="brand-icon">PF</div>
+    <div class="brand-icon">DC</div>
     <div class="brand-text">
-      <h1>PesaFlow</h1>
+      <h1>Drap Cash</h1>
       <span>Mobile Money Gateway</span>
     </div>
   </div>
@@ -1644,7 +1644,7 @@ body {
   <div class="view active" id="view-dashboard">
     <div class="page-header">
       <h2>Dashboard</h2>
-      <p>Overview of your PesaFlow payment gateway</p>
+      <p>Overview of your Drap Cash payment gateway</p>
     </div>
     <div class="page-content">
 
@@ -2362,7 +2362,7 @@ let bulkRows = [];
 // INIT
 // ═════════════════════════════════════════════════════════════════════════════
 window.onload = () => {
-  addLog('PesaFlow initialized. Checking ClickPesa connection…');
+  addLog('Drap Cash initialized. Checking ClickPesa connection…');
   checkHealth();
   addBulkRow(); // Initialize bulk table with 1 row
 };
@@ -2462,7 +2462,7 @@ function addLog(msg, type='i') {
 function fmt(n) { return 'TZS ' + Math.round(n).toLocaleString(); }
 
 // Generate purely alphanumeric reference
-function genRef() { return 'PF' + Date.now().toString(36).toUpperCase(); }
+function genRef() { return 'DC' + Date.now().toString(36).toUpperCase(); }
 
 // Validate alphanumeric reference
 function isValidRef(ref) {
@@ -3222,7 +3222,7 @@ function updateDashboard() {
   }
 }
 
-addLog('PesaFlow v2.1 loaded.');
+addLog('Drap Cash v2.1 loaded.');
 </script>
 </body>
 </html>

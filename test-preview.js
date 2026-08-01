@@ -5,7 +5,7 @@ async function test() {
     const res = await axios.post('http://localhost:3000/api/payout/preview', {
       amount: 1000,
       phoneNumber: "255755123456",
-      orderReference: "PF12345678",
+      orderReference: "DC12345678",
       currency: "TZS"
     });
     console.log(JSON.stringify(res.data, null, 2));
